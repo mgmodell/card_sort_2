@@ -4,8 +4,8 @@ class CreateSources < ActiveRecord::Migration[5.1]
       t.string :citation
       t.string :authors
       t.integer :year
-      t.description :purpose
-      t.referencesdiscard :topic
+      t.string :purpose
+      t.references :topic
       t.string :discard_reason
 
       t.timestamps
