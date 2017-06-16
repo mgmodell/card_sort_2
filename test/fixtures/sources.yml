@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  citation: MyString
+  authors: MyString
+  year: 1
+  purpose: 
+  topic: 
+  discard_reason: MyString
+
+two:
+  citation: MyString
+  authors: MyString
+  year: 1
+  purpose: 
+  topic: 
+  discard_reason: MyString
