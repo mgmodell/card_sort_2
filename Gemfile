@@ -33,6 +33,8 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'anystyle-parser', '~> 0.8.2'
 gem 'google_drive'
+gem 'devise'
+gem 'omniauth-google-oauth2'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
