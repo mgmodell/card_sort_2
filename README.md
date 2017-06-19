@@ -1,24 +1,6 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Some Resources
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* [The Google Drive Gem](https://github.com/gimite/google-drive-ruby)
+* [Auth instructions](https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md)
