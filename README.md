@@ -2,5 +2,5 @@
 
 Some Resources
 
-  *[The Google Drive Gem](https://github.com/gimite/google-drive-ruby)
-  *[Auth instructions](https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md)
+* [The Google Drive Gem](https://github.com/gimite/google-drive-ruby)
+* [Auth instructions](https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md)
