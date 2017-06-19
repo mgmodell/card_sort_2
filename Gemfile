@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'anystyle-parser', '~> 0.8.2'
-gem 'google-api-client', '~> 0.11'
+gem 'google_drive'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
