@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170621070705) do
+ActiveRecord::Schema.define(version: 20170621150442) do
 
   create_table "authors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "given_name"
     t.string "family_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "datasets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_datasets_on_user_id"
   end
 
   create_table "sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -29,6 +37,8 @@ ActiveRecord::Schema.define(version: 20170621070705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
+    t.bigint "dataset_id"
+    t.index ["dataset_id"], name: "index_sources_on_dataset_id"
     t.index ["topic_id"], name: "index_sources_on_topic_id"
   end
 
@@ -56,4 +66,6 @@ ActiveRecord::Schema.define(version: 20170621070705) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "datasets", "users"
+  add_foreign_key "sources", "datasets"
 end
