@@ -1,7 +1,7 @@
-class HomeController < ApplicationController
-  def index
-  end
+# frozen_string_literal: true
 
-  def load
-  end
+class HomeController < ApplicationController
+  def index; end
+
+  def load; end
 end
