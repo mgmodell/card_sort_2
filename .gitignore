@@ -12,6 +12,9 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+rerun.txt
+*.swp
+*~
 
 /node_modules
 /yarn-error.log
