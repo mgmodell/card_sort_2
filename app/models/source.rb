@@ -2,6 +2,6 @@
 
 class Source < ApplicationRecord
   belongs_to :dataset, inverse_of: :sources
-  has_many :authors, inverse_of: :source
+  has_and_belongs_to_many :authors, inverse_of: :sources
   belongs_to :topic, inverse_of: :sources
 end
