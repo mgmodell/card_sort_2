@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'google/apis/drive_v2'
 
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
@@ -10,10 +11,15 @@ class User < ApplicationRecord
 
   # Omniauth support
   def self.from_omniauth(access_token)
-    session = GoogleDrive::Session.from_access_token( access_token )
-    my_spreadsheets = session.spreadsheets
+    #session = GoogleDrive::Session.new( access_token )
+    drive = Google::Apis::DriveV2::DriveService.new
+    files = drive.list_files(
+      fields: "nextPageToken, files(id, name)",
+      q: "mimeType = 'application/vnd.google-apps.spreadsheet' AND trashed != true",
+    )
+
+    # byebug
     puts "************"
-    puts my_spreadsheets.count
 
     data = access_token.info
     user = User.where(email: data['email']).first
