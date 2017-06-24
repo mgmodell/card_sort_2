@@ -34,7 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'anystyle-parser', '~> 0.8.2'
 gem 'devise'
-gem 'google-api-client'
+gem 'google_drive'
 gem 'omniauth-google-oauth2'
 
 # Use Capistrano for deployment
