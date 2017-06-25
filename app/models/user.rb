@@ -10,13 +10,16 @@ class User < ApplicationRecord
 
   # Omniauth support
   def self.from_omniauth(access_token)
-    #byebug
     session = GoogleDrive::Session.from_access_token( access_token[ :credentials ][ :token ] )
-    #byebug
-    x = session.spreadsheets
+    x = session.spreadsheet_by_title 'Framework Evaluation' 
+    ws = x.worksheet_by_title 'meta-Main'
+
+    puts "************"
+    (2..ws.num_rows).each do |row_num|
+      puts ws[ row_num, 1 ]
+    end
 
     # byebug
-    puts "************"
 
     data = access_token.info
     user = User.where(email: data['email']).first
