@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170622052552) do
+ActiveRecord::Schema.define(version: 20170625055802) do
 
   create_table "authors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "given_name"
@@ -33,9 +33,17 @@ ActiveRecord::Schema.define(version: 20170622052552) do
     t.index ["user_id"], name: "index_datasets_on_user_id"
   end
 
+  create_table "factors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "source_id"
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id"], name: "index_factors_on_source_id"
+  end
+
   create_table "sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "citation"
-    t.string "authors"
+    t.string "author_list"
     t.integer "year"
     t.string "purpose"
     t.bigint "topic_id"
@@ -73,5 +81,6 @@ ActiveRecord::Schema.define(version: 20170622052552) do
   end
 
   add_foreign_key "datasets", "users"
+  add_foreign_key "factors", "sources"
   add_foreign_key "sources", "datasets"
 end

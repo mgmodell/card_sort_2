@@ -14,24 +14,24 @@ class User < ApplicationRecord
     x = session.spreadsheet_by_title 'Framework Evaluation' 
     ws = x.worksheet_by_title 'meta-Main'
 
-    ds = Dataset.create name: "new", user: self
+    ds = Dataset.create name: "new (#{DateTime.current})"
 
     puts "************"
     (2..ws.num_rows).each do |row_num|
       s = Source.new
       s.citation = ws[ row_num, 1 ]
       s.year = ws[ row_num, 2 ]
-      s.authors = ws[ row_num, 3 ]
+      s.author_list = ws[ row_num, 3 ]
       s.purpose = ws[ row_num, 4 ]
       s.discard_reason = ws[ row_num, 8 ]
-      s.datase = ds
+      s.dataset = ds
       s.save
 
       puts s.errors.full_messages unlss s.errors.empty?
     end
 
     Source.find_all do |source|
-      ws = x.worksheet_by_title s.authors
+      ws = x.worksheet_by_title s.author_list
       (1..ws.num_rows).each do |row_num|
         Factor.create source: s, text: ws[ row_num, 1 ]
       end

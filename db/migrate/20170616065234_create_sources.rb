@@ -4,7 +4,7 @@ class CreateSources < ActiveRecord::Migration[5.1]
   def change
     create_table :sources do |t|
       t.string :citation
-      t.string :authors
+      t.string :author_list
       t.integer :year
       t.string :purpose
       t.references :topic
