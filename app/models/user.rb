@@ -10,30 +10,31 @@ class User < ApplicationRecord
 
   # Omniauth support
   def self.from_omniauth(access_token)
-    session = GoogleDrive::Session.from_access_token( access_token[ :credentials ][ :token ] )
-    x = session.spreadsheet_by_title 'Framework Evaluation' 
+    session = GoogleDrive::Session.from_access_token(access_token[:credentials][:token])
+    x = session.spreadsheet_by_title 'Framework Evaluation'
     ws = x.worksheet_by_title 'meta-Main'
 
     ds = Dataset.create name: "new (#{DateTime.current})"
 
-    puts "************"
+    puts '************'
     (2..ws.num_rows).each do |row_num|
       s = Source.new
-      s.citation = ws[ row_num, 1 ]
-      s.year = ws[ row_num, 2 ]
-      s.author_list = ws[ row_num, 3 ]
-      s.purpose = ws[ row_num, 4 ]
-      s.discard_reason = ws[ row_num, 8 ]
+      s.citation = ws[row_num, 1]
+      s.year = ws[row_num, 2]
+      s.author_list = ws[row_num, 3]
+      s.purpose = ws[row_num, 4]
+      s.discard_reason = ws[row_num, 8]
+      s.topic = Topic.where( name: ws[row_num, 6] ).take
       s.dataset = ds
       s.save
 
-      puts s.errors.full_messages unlss s.errors.empty?
+      puts s.errors.full_messages unless s.errors.empty?
     end
 
-    Source.find_all do |source|
+    ds.sources.each do |_source|
       ws = x.worksheet_by_title s.author_list
       (1..ws.num_rows).each do |row_num|
-        Factor.create source: s, text: ws[ row_num, 1 ]
+        Factor.create source: s, text: ws[row_num, 1]
       end
     end
 

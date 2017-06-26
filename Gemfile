@@ -34,13 +34,14 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'anystyle-parser', '~> 0.8.2'
 gem 'devise'
+gem 'genealogy'
 gem 'google_drive'
 gem 'omniauth-google-oauth2'
-gem 'stopwords-filter', require: 'stopwords'
-gem 'spellchecker'
-gem 'thesaurus'
 gem 'soundex'
-gem 'genealogy'
+gem 'spellchecker'
+gem 'stopwords-filter', require: 'stopwords'
+gem 'thesaurus'
+gem 'stemmify'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
