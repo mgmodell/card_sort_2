@@ -24,7 +24,10 @@ class User < ApplicationRecord
       s.author_list = ws[row_num, 3]
       s.purpose = ws[row_num, 4]
       s.discard_reason = ws[row_num, 8]
-      s.topic = Topic.where( name: ws[row_num, 6] ).take
+      t = Topic.where( name: ws[row_num, 6 ] ).count > 0 ?
+                  Topic.where( name: ws[row_num, 6] ).take :
+                  Topic.where( name: 'Undetermined' ).take
+      s.topic = t
       s.dataset = ds
       s.save
 
