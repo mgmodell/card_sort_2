@@ -10,11 +10,24 @@ class User < ApplicationRecord
 
   # Omniauth support
   def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.where(email: data['email']).first
+
+    unless user
+      user = User.create(
+        email: data['email'],
+        password: Devise.friendly_token[0, 20]
+      )
+    end
+
     session = GoogleDrive::Session.from_access_token(access_token[:credentials][:token])
     x = session.spreadsheet_by_title 'Framework Evaluation'
     ws = x.worksheet_by_title 'meta-Main'
 
-    ds = Dataset.create name: "new (#{DateTime.current})"
+    ds = Dataset.create name: "new (#{DateTime.current})",
+                        user: user
+    puts ds.errors.full_messages unless ds.errors.empty?
+
 
     puts '************'
     (2..ws.num_rows).each do |row_num|
@@ -34,24 +47,21 @@ class User < ApplicationRecord
       puts s.errors.full_messages unless s.errors.empty?
     end
 
-    ds.sources.each do |_source|
-      ws = x.worksheet_by_title s.author_list
-      (1..ws.num_rows).each do |row_num|
-        Factor.create source: s, text: ws[row_num, 1]
+    ds.sources.each do |source|
+      puts "*********************"
+      puts "#{source.author_list} (#{source.year}"
+      ws = x.worksheet_by_title source.author_list
+      unless ws.nil?
+        (1..ws.num_rows).each do |row_num|
+          # puts "\t #{ws[row_num, 1]}"
+          f = Factor.create source: source, text: ws[row_num, 1]
+          puts f.errors.full_messages unless f.errors.empty?
+        end
+      else
+        puts "--------- NO SHEET NAMED '#{source.author_list}'"
       end
     end
 
-    # byebug
-
-    data = access_token.info
-    user = User.where(email: data['email']).first
-
-    unless user
-      user = User.create(
-        email: data['email'],
-        password: Devise.friendly_token[0, 20]
-      )
-    end
     user
   end
 end
