@@ -47,6 +47,7 @@ class User < ApplicationRecord
       puts s.errors.full_messages unless s.errors.empty?
     end
 
+    not_hit = []
     ds.sources.each do |source|
       puts "*********************"
       puts "#{source.author_list} (#{source.year}"
@@ -58,8 +59,13 @@ class User < ApplicationRecord
           puts f.errors.full_messages unless f.errors.empty?
         end
       else
+        not_hit << source.author_list
         puts "--------- NO SHEET NAMED '#{source.author_list}'"
       end
+    end
+    puts "Unable to retrieve #{not_hit.count} sets of factors"
+    not_hit.each do |list|
+      puts "----- '#{list}'"
     end
 
     user
