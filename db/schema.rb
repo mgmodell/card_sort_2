@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170625055802) do
+ActiveRecord::Schema.define(version: 20170702212035) do
 
   create_table "authors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "given_name"
@@ -41,6 +41,19 @@ ActiveRecord::Schema.define(version: 20170625055802) do
     t.index ["source_id"], name: "index_factors_on_source_id"
   end
 
+  create_table "factors_words", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "word_id", null: false
+    t.bigint "factor_id", null: false
+    t.index ["factor_id", "word_id"], name: "index_factors_words_on_factor_id_and_word_id", unique: true
+  end
+
+  create_table "references", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "source_id"
+    t.integer "reference_source_id"
+    t.index ["reference_source_id", "source_id"], name: "index_references_on_reference_source_id_and_source_id", unique: true
+    t.index ["source_id", "reference_source_id"], name: "index_references_on_source_id_and_reference_source_id", unique: true
+  end
+
   create_table "sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "citation"
     t.string "author_list"
@@ -54,6 +67,12 @@ ActiveRecord::Schema.define(version: 20170625055802) do
     t.bigint "dataset_id"
     t.index ["dataset_id"], name: "index_sources_on_dataset_id"
     t.index ["topic_id"], name: "index_sources_on_topic_id"
+  end
+
+  create_table "stems", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "word"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -80,7 +99,16 @@ ActiveRecord::Schema.define(version: 20170625055802) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "words", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "raw"
+    t.bigint "stem_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stem_id"], name: "index_words_on_stem_id"
+  end
+
   add_foreign_key "datasets", "users"
   add_foreign_key "factors", "sources"
   add_foreign_key "sources", "datasets"
+  add_foreign_key "words", "stems"
 end

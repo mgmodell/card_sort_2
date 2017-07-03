@@ -1,0 +1,2 @@
+class Stem < ApplicationRecord
+end

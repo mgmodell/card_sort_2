@@ -82,9 +82,6 @@ GEM
     faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
-    genealogy (2.1.1)
-      activerecord (>= 3.2)
-      activesupport (>= 3.2)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     google-api-client (0.12.0)
@@ -275,7 +272,6 @@ DEPENDENCIES
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
   devise
-  genealogy
   google_drive
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)

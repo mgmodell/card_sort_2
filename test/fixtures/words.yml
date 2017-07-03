@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  raw: MyString
+  stem: one
+
+two:
+  raw: MyString
+  stem: two
