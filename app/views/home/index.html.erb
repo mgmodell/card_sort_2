@@ -1,2 +1,12 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<H1>Existing Datasets</H1>
+<ul>
+  <% @datasets.each do |ds| %>
+  <li><%= ds.name %></li>
+  <% end %>
+</ul>
+<h1>Your Spreadsheets</h1>
+<ul>
+  <% @sheets.each do |ss| %>
+  <li><%= ss.title %> | <%= ss.key %></li>
+  <% end %>
+</ul>
