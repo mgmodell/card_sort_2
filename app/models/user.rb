@@ -4,8 +4,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable,
-         #:rememberable,
+         :recoverable, # :rememberable,
          :trackable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
   has_many :datasets, inverse_of: :user
@@ -19,58 +18,35 @@ class User < ApplicationRecord
       user = User.create(
         email: data['email'],
         password: Devise.friendly_token[0, 20],
-        token: access_token[:credentials][:token]
+        token: access_token[:credentials][:token],
+        expires_at: access_token[:credentials][:expires_at]
       )
     end
 
-#    session = GoogleDrive::Session.from_access_token(access_token[:credentials][:token])
-#    x = session.spreadsheet_by_title 'Framework Evaluation'
-#    ws = x.worksheet_by_title 'meta-Main'
-#
-#    ds = Dataset.create name: "new (#{DateTime.current})",
-#                        user: user
-#    puts ds.errors.full_messages unless ds.errors.empty?
-#
-#
-#    puts '************'
-#    (2..ws.num_rows).each do |row_num|
-#      s = Source.new
-#      s.citation = ws[row_num, 1]
-#      s.year = ws[row_num, 2]
-#      s.author_list = ws[row_num, 3]
-#      s.purpose = ws[row_num, 4]
-#      s.discard_reason = ws[row_num, 8]
-#      t = Topic.where( name: ws[row_num, 6 ] ).count > 0 ?
-#                  Topic.where( name: ws[row_num, 6] ).take :
-#                  Topic.where( name: 'Undetermined' ).take
-#      s.topic = t
-#      s.dataset = ds
-#      s.save
-#
-#      puts s.errors.full_messages unless s.errors.empty?
-#    end
-#
-#    not_hit = []
-#    ds.sources.each do |source|
-#      puts "*********************"
-#      puts "#{source.author_list} (#{source.year}"
-#      ws = x.worksheet_by_title source.author_list
-#      unless ws.nil?
-#        (1..ws.num_rows).each do |row_num|
-#          # puts "\t #{ws[row_num, 1]}"
-#          f = Factor.create source: source, text: ws[row_num, 1]
-#          puts f.errors.full_messages unless f.errors.empty?
-#        end
-#      else
-#        not_hit << source.author_list
-#        puts "--------- NO SHEET NAMED '#{source.author_list}'"
-#      end
-#    end
-#    puts "Unable to retrieve #{not_hit.count} sets of factors"
-#    not_hit.each do |list|
-#      puts "----- '#{list}'"
-#    end
-#
     user
+  end
+
+  def refresh_token_if_expired
+    if token_expired?
+      response    = RestClient.post "#{ENV['DOMAIN']}oauth2/token", :grant_type => 'refresh_token', :refresh_token => self.refresh_token, :client_id => ENV['APP_ID'], :client_secret => ENV['APP_SECRET'] 
+      refreshhash = JSON.parse(response.body)
+  
+      token_will_change!
+      expires_at_will_change!
+  
+      self.token     = refreshhash['access_token']
+      self.expires_at = DateTime.now + refreshhash["expires_in"].to_i.seconds
+  
+      self.save
+      puts 'Saved'
+    end
+  end
+
+  def token_expired?
+    expiry = Time.at(self.expires_at) 
+    return true if expiry < Time.now # expired token, so we should quickly return
+    token_expires_at = expiry
+    save if changed?
+    false # token not expired. :D
   end
 end

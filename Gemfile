@@ -41,6 +41,7 @@ gem 'spellchecker'
 gem 'stopwords-filter', require: 'stopwords'
 gem 'thesaurus'
 gem 'stemmify'
+gem 'rest-client'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
