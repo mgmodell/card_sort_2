@@ -1,20 +1,6 @@
 class DatasetsController < ApplicationController
-  def wordcloud
-  end
-
-  def cluster_map
-  end
-
-  def histogram
-  end
 
   def show
-  end
-
-  def add_source
-  end
-
-  def process
   end
 
   def edit
@@ -25,4 +11,23 @@ class DatasetsController < ApplicationController
 
   def destroy
   end
+
+  def add_source
+  end
+
+  def process
+  end
+
+  private
+    def set_dataset
+      @dataset = Dataset.find( params[ :id ]
+    end
+
+    def dataset_params
+      params.require(:dataset).permit( :name,
+                                    source: [:citation, :year, :title,
+                                            :discard_reason, :topic_id,
+                                            :purpose, ] )
+    end
+
 end
