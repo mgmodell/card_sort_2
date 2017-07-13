@@ -12,10 +12,19 @@ class DatasetsController < ApplicationController
   def destroy
   end
 
-  def add_source
+  def add_sources
+    Anystyle.parse( params[ :sources ] )each do |source|
+
+    end
   end
 
   def process
+    @dataset.sources.each do |source|
+      parsed = Anystyle.parse source.citation
+      #TODO finish this
+
+
+    end
   end
 
   private
