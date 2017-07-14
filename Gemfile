@@ -33,6 +33,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'anystyle-parser', '~> 0.8.2'
+gem 'citation'
 gem 'devise'
 gem 'google_drive'
 gem 'omniauth-google-oauth2'
