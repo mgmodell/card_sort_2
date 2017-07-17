@@ -1,2 +1,12 @@
 <h1>Datasets#show</h1>
-<p>Find me in app/views/datasets/show.html.erb</p>
+<strong>Name:</strong> <%= @dataset.name %></br>
+<p>This dataset contains <%= @dataset.factors.count %> factors, yielding
+  <%= @dataset.words.uniq.count %> distinct words yielding
+  <%= @dataset.stems.uniq.count %> unique stems. So far, <%= @dataset.sources.count %>
+  sources (below) contribute to this data.
+</p>
+<ul><% @dataset.sources.each do |source| %>
+  <li><%= link_to source.citation, source_path( source ) %></li>
+<% end %></ul>
+
+<%= link_to "Edit Dataset", edit_dataset_path( @dataset ) %>

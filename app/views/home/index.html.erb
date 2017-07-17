@@ -1,7 +1,7 @@
 <H1>Existing Datasets</H1>
 <ul>
   <% @datasets.each do |ds| %>
-  <li><%= ds.name %></li>
+  <li><%= link_to ds.name,  dataset_path( id: ds.id ) %></li>
   <% end %>
 </ul>
 <h1>Your Spreadsheets</h1>

@@ -10,6 +10,8 @@ class DatasetsController < ApplicationController
   end
 
   def destroy
+    @dataset.destroy
+    redirect_to :root
   end
 
   def process
