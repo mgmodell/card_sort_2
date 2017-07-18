@@ -1,0 +1,28 @@
+<h1>Source Show</h1>
+<strong>Title:</strong> <%= @source.title %></br>
+<strong>Year:</strong> <%= @source.year %></br>
+<strong>Purpose:</strong> <%= @source.purpose %></br>
+<strong>Discard Reason:</strong> <%= @source.discard_reason %></br>
+<strong>Topic:</strong> <%= @source.topic.name %></br>
+</br>
+</br>
+
+<i>Citation:</strong> <%= @source.citation %></i>
+
+<h2>Source Authors:</h2>
+<ul><% @source.authors.each do |author| %>
+  <li><%= author.given_name %> <%= author.family_name %></li>
+<% end %></ul>
+
+<h2>Cited Sources:</h2>
+<ul><% @source.refs.each do |ref| %>
+  <li><%= ref.author_list %> [ <%= ref.title %> ]</li>
+<% end %></ul>
+
+<h1>Add Sources</h1>
+<%= form_tag add_refs_to_source_path( @source ) do %>
+  <%= text_area_tag 'sources' %>
+  <%= submit_tag 'Add ''em!' %>
+<% end %>
+
+<%= link_to "Edit Source", edit_source_path( @source ) %>

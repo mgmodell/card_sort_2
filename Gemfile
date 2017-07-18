@@ -43,6 +43,7 @@ gem 'stopwords-filter', require: 'stopwords'
 gem 'thesaurus'
 gem 'stemmify'
 gem 'rest-client'
+gem 'simple_form'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -1,12 +1,15 @@
 class DatasetsController < ApplicationController
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
+    if @dataset.update( dataset_params )
+      redirect_to dataset_path(@dataset), notice: 'Updated!'
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -18,6 +21,7 @@ class DatasetsController < ApplicationController
     @dataset.sources.each do |source|
       source.preproc
     end
+    render :show
   end
 
   private

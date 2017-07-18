@@ -2,8 +2,10 @@
 
 Rails.application.routes.draw do
   resources :datasets, only: [:show, :edit, :update, :destroy ]
+  resources :sources, only: [:show, :edit, :update, :destroy ]
 
   get 'sources/add_refs/:id' => 'sources#add_refs', as: 'add_refs_to_source'
+  get 'sources/process/:id' => 'sources#process', as: 'process_source'
   get 'datasets/process/:id' => 'datasets#process', as: 'process_dataset'
 
   get 'home/load/:key' => 'home#load', as: 'new_dataset'
