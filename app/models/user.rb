@@ -7,7 +7,7 @@ class User < ApplicationRecord
          :recoverable, # :rememberable,
          :trackable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
-  has_many :datasets, inverse_of: :user
+  has_many :datasets, inverse_of: :user, dependent: :destroy
 
   # Omniauth support
   def self.from_omniauth(access_token)
@@ -19,6 +19,7 @@ class User < ApplicationRecord
         email: data['email'],
         password: Devise.friendly_token[0, 20],
         token: access_token[:credentials][:token],
+        refresh_token: access_token[:credentials][:refresh_token],
         expires_at: access_token[:credentials][:expires_at]
       )
     end

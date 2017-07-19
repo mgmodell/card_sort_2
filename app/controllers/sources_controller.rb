@@ -28,7 +28,7 @@ class SourcesController < ApplicationController
     end
   end
 
-  def process
+  def data_proc
     @source.preproc
   end
 

@@ -7,6 +7,7 @@
 <h1>Your Spreadsheets</h1>
 <ul>
   <% @sheets.each do |ss| %>
-  <li><%= link_to ss.title, new_dataset_path( key: ss.key ) %></li>
+  <li><%= link_to ss.title, ss.human_url, target: '_blank' %> |
+    <%= link_to 'process', new_dataset_path( key: ss.key ) %></li>
   <% end %>
 </ul>

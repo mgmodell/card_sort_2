@@ -23,7 +23,7 @@ class DatasetsController < ApplicationController
     redirect_to :root
   end
 
-  def process
+  def data_proc
     @dataset.sources.each do |source|
       source.preproc
     end
@@ -32,7 +32,7 @@ class DatasetsController < ApplicationController
 
   private
     def set_dataset
-      @dataset = Dataset.find( params[ :id ]
+      @dataset = Dataset.find( params[ :id ] )
     end
 
     def dataset_params

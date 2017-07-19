@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170705112847) do
     t.string "discard_reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title"
+    t.text "title"
     t.bigint "dataset_id"
     t.index ["dataset_id"], name: "index_sources_on_dataset_id"
     t.index ["topic_id"], name: "index_sources_on_topic_id"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20170705112847) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "token"
+    t.text "refresh_token"
     t.integer "expires_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

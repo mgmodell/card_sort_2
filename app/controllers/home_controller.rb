@@ -19,6 +19,7 @@ class HomeController < ApplicationController
     key = params[ :key ]
     current_user.refresh_token_if_expired
 
+    puts '------------------ Creating a Dataset ------------------ '
     session = GoogleDrive::Session.from_access_token( current_user.token )
     ss = session.spreadsheet_by_key( key )
     title = ss.title
@@ -50,7 +51,7 @@ class HomeController < ApplicationController
     not_hit = []
     ds.sources.each do |source|
       puts "*********************"
-      puts "#{source.author_list} (#{source.year}"
+      #puts "#{source.author_list} (#{source.year}"
       ws = ss.worksheet_by_title source.author_list
       unless ws.nil?
         (1..ws.num_rows).each do |row_num|
@@ -60,7 +61,7 @@ class HomeController < ApplicationController
         end
       else
         not_hit << source.author_list
-        puts "--------- NO SHEET NAMED '#{source.author_list}'"
+        #puts "--------- NO SHEET NAMED '#{source.author_list}'"
       end
     end
     puts "Unable to retrieve #{not_hit.count} sets of factors"
@@ -68,6 +69,6 @@ class HomeController < ApplicationController
       puts "----- '#{list}'"
     end
 
-    render :index
+    redirect_to :root
   end
 end
