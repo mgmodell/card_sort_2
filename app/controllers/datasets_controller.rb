@@ -1,6 +1,12 @@
 class DatasetsController < ApplicationController
 
-  def show; end
+  def show
+    # Build out any history support.
+
+    # Histogram info
+    stem_hist = @dataset.sources.joins( factors: { words: :stems } ).group( factor ).count
+  
+  end
 
   def edit; end
 

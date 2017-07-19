@@ -227,6 +227,9 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
+    simple_form (3.5.0)
+      actionpack (> 4, < 5.2)
+      activemodel (> 4, < 5.2)
     soundex (0.1.2)
     spellchecker (0.1.5)
     spring (2.0.2)
@@ -298,6 +301,7 @@ DEPENDENCIES
   rest-client
   sass-rails (~> 5.0)
   selenium-webdriver
+  simple_form
   soundex
   spellchecker
   spring
