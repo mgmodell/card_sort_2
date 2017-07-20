@@ -29,7 +29,14 @@ class User < ApplicationRecord
 
   def refresh_token_if_expired
     if token_expired?
-      response    = RestClient.post "#{ENV['DOMAIN']}oauth2/token", :grant_type => 'refresh_token', :refresh_token => self.refresh_token, :client_id => ENV['APP_ID'], :client_secret => ENV['APP_SECRET'] 
+      puts "APP_ID: #{ENV['APP_ID']}"
+      puts "APP_SECRET: #{ENV['APP_SECRET']}"
+      puts "google_key: #{ENV['google_key']}"
+      puts "google_secret: #{ENV['google_secret']}"
+      byebug
+
+
+      response    = RestClient.post "https://accounts.google.com/o/oauth2/token", :grant_type => 'refresh_token', :refresh_token => self.refresh_token, :client_id => ENV['APP_ID'], :client_secret => ENV['APP_SECRET'] 
       refreshhash = JSON.parse(response.body)
   
       token_will_change!
