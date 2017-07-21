@@ -16,7 +16,7 @@ class SourcesController < ApplicationController
   def add_refs
     #Add any references here
     topic = Topic.where( name: "Undetermined" ).take
-    Anystyle.parse( params[ :sources ] )each do |src|
+    Anystyle.parse( params[ :sources ] ).each do |src|
       s = Source.create( author_list: src[ :author ],
                       title: src[ :title ],
                       year: src[ :date ],
@@ -39,7 +39,7 @@ class SourcesController < ApplicationController
 
   private
     def set_source
-      @source = Source.find( params[ :id ]
+      @source = Source.find( params[ :id ] )
     end
 
     def source_params
