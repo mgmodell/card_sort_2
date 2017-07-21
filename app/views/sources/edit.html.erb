@@ -1,4 +1,4 @@
 <h1>Sources Edit</h1>
 <%= render 'form' %>
-<%= link_to t :show, sources_url( @source ) %> |
-<%= link_to t :back, sources_path %>
+<%= link_to 'Show', source_path( @source ) %> |
+<%= link_to 'Back', dataset_path( @source.dataset ) %><br>
