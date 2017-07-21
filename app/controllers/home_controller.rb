@@ -30,7 +30,7 @@ class HomeController < ApplicationController
     puts ds.errors.full_messages unless ds.errors.empty?
 
 
-    puts '************'
+    puts '***** Topics *******'
     (2..ws.num_rows).each do |row_num|
       s = Source.new
       s.citation = ws[row_num, 1]
@@ -50,7 +50,7 @@ class HomeController < ApplicationController
 
     not_hit = []
     ds.sources.each do |source|
-      puts "*********************"
+      puts "******** SOURCES *************"
       #puts "#{source.author_list} (#{source.year}"
       ws = ss.worksheet_by_title source.author_list
       unless ws.nil?
