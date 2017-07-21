@@ -15,11 +15,12 @@ class HomeController < ApplicationController
 
   end
 
-  def load
+  def pull
     key = params[ :key ]
     current_user.refresh_token_if_expired
 
     puts '------------------ Creating a Dataset ------------------ '
+
     session = GoogleDrive::Session.from_access_token( current_user.token )
     ss = session.spreadsheet_by_key( key )
     title = ss.title

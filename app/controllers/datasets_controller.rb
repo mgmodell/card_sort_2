@@ -1,10 +1,11 @@
 class DatasetsController < ApplicationController
+  before_action :set_dataset
 
   def show
     # Build out any history support.
 
     # Histogram info
-    stem_hist = @dataset.sources.joins( factors: { words: :stems } ).group( factor ).count
+    stem_hist = @dataset.sources.joins( factors: { words: :stem } ).group( 'factors.id' ).count
   
   end
 

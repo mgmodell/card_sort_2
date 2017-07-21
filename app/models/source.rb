@@ -78,7 +78,7 @@ class Source < ApplicationRecord
           end
           word_obj = Word.create( raw: result[:original], stem: stem )
         end
-        factor.words << word_obj
+        factor.words << word_obj unless factor.words.include? word_obj
       end
       factor.save
     end

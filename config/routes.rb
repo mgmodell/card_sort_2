@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'sources/process/:id' => 'sources#data_proc', as: 'process_source'
   get 'datasets/process/:id' => 'datasets#data_proc', as: 'process_dataset'
 
-  get 'home/load/:key' => 'home#load', as: 'new_dataset'
+  get 'home/pull/:key' => 'home#pull', as: 'new_dataset'
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
