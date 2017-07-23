@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Source < ApplicationRecord
+  default_scope { order( :citation ) }
   belongs_to :dataset, inverse_of: :sources
   has_and_belongs_to_many :authors, inverse_of: :sources
   belongs_to :topic, inverse_of: :sources
@@ -35,23 +36,25 @@ class Source < ApplicationRecord
       if !correctly_processed
         self.author_list = source[ :author ]
       end
-      self.authors = []
-      author_names = self.author_list.split( ' and ')
-      author_names.each do |name|
-        name_components = name.split( ', ')
-        g_name =  name_components[ 1 ]
-        f_name = name_components[ 0 ]
+      unless self.author_list.blank?
+        self.authors = []
+        author_names = self.author_list.split( ' and ')
+        author_names.each do |name|
+          name_components = name.split( ', ')
+          g_name =  name_components[ 1 ]
+          f_name = name_components[ 0 ]
 
-        a = Author.where( given_name: g_name,
-                          family_name: f_name ).take
-        if a.nil?
-          puts "\t: #{g_name} #{f_name} not found"
-          a = Author.create(
-                          given_name: g_name, 
-                          family_name: f_name )
+          a = Author.where( given_name: g_name,
+                            family_name: f_name ).take
+          if a.nil?
+            puts "\t: #{g_name} #{f_name} not found"
+            a = Author.create(
+                            given_name: g_name, 
+                            family_name: f_name )
+          end
+          puts "\tAuthor: #{a.given_name} #{a.family_name}"
+          self.authors << a
         end
-        puts "\tAuthor: #{a.given_name} #{a.family_name}"
-        self.authors << a
       end
       self.save
     end
