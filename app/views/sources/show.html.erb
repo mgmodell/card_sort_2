@@ -22,7 +22,7 @@
 
 <h1>Add Sources</h1>
 <%= form_tag add_refs_to_source_path( @source ) do %>
-  <%= text_area_tag 'sources', :size =>"25x10" %>
+  <%= text_area_tag 'sources', '', size: "100x25" %>
   <%= submit_tag 'Add ''em!' %>
 <% end %>
 

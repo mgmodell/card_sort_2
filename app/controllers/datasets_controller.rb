@@ -28,7 +28,7 @@ class DatasetsController < ApplicationController
     @dataset.sources.each do |source|
       source.preproc
     end
-    render :show
+    redirect_to dataset_path( @dataset )
   end
 
   private

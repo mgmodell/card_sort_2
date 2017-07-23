@@ -3,7 +3,8 @@
   <% @datasets.each do |ds| %>
   <li><%= link_to ds.name,  dataset_path( id: ds.id ) %>
         [ <%= ds.load_pct %>% loaded | <%= ds.percent_processed %>% processed &mdash;
-          <%=link_to 'process now', process_dataset_path( ds ) %> ]</li>
+          <%=link_to 'process now', process_dataset_path( ds ) %>&nbsp;|&nbsp;
+          <%= link_to 'Destroy', ds, method: :delete, data: { confirm: "Are you sure?" } %>]</li>
   <% end %>
 </ul>
 <h1>Your Spreadsheets</h1>

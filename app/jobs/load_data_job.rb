@@ -11,10 +11,9 @@ class LoadDataJob < ApplicationJob
     ss = session.spreadsheet_by_key( key )
     title = ss.title
 
-    ws = ss.worksheet_by_title( 'meta-Search queries' )
-    item_count =  1 + ws[ 2, 3 ].to_i + ws[ 3, 2 ].to_i
-
     ws = ss.worksheet_by_title( 'meta-Main' )
+
+    item_count =  1 + ( ws.num_rows * 12 )
 
     progress = 1.0
 
@@ -69,6 +68,8 @@ class LoadDataJob < ApplicationJob
     not_hit.each do |list|
       puts "----- '#{list}'"
     end
+    ds.load_pct = 100
+    ds.save
 
   end
 end

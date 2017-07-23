@@ -1,3 +1,5 @@
+<%= link_to "Edit Dataset", edit_dataset_path( @dataset ) %>&nbsp;>&nbsp;
+<%= link_to "Back to list of datasets", root_path %>
 <h1>Show Dataset</h1>
 <strong>Name:</strong> <%= @dataset.name %></br>
 <p>This dataset contains <%= @dataset.factors.count %> factors, yielding
