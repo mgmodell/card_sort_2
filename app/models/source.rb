@@ -25,4 +25,10 @@ class Source < ApplicationRecord
     self.save
     PreProcSourceJob.perform_later( source: self )
   end
+
+  def add_refs( source_text: )
+    self.refs_processed = false
+    self.save
+    AddRefsFromBiblioJob.perform_later( source_text: source_text, source: self )
+  end
 end

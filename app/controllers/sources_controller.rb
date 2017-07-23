@@ -15,17 +15,8 @@ class SourcesController < ApplicationController
 
   def add_refs
     #Add any references here
-    topic = Topic.where( name: "Undetermined" ).take
-    Anystyle.parse( params[ :sources ] ).each do |src|
-      s = Source.create( author_list: src[ :author ],
-                      title: src[ :title ],
-                      year: src[ :date ],
-                      citation: src.format_raw.to_s,
-                      topic: topic )
-      s.preproc
-      @source.refs << s
-      @source.save
-    end
+    @source.add_refs( params[ :sources ] )
+    redirect_to source_path( @source )
   end
 
   def data_proc

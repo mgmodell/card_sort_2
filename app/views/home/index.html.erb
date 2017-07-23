@@ -2,7 +2,8 @@
 <ul>
   <% @datasets.each do |ds| %>
   <li><%= link_to ds.name,  dataset_path( id: ds.id ) %>
-        [ <%= ds.load_pct %>% loaded | <%= ds.percent_processed %>% processed ]</li>
+        [ <%= ds.load_pct %>% loaded | <%= ds.percent_processed %>% processed &mdash;
+          <%=link_to 'process now', process_dataset_path( ds ) %> ]</li>
   <% end %>
 </ul>
 <h1>Your Spreadsheets</h1>

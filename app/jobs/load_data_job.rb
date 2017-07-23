@@ -16,10 +16,10 @@ class LoadDataJob < ApplicationJob
 
     ws = ss.worksheet_by_title( 'meta-Main' )
 
-    progress = 1
+    progress = 1.0
 
     ds = Dataset.create name: "#{title} - (#{DateTime.current})",
-                        user: task_user, load_pct: 100.0 * (progress / item_count )
+                        user: task_user, load_pct: 100 * (progress / item_count )
     puts ds.errors.full_messages unless ds.errors.empty?
 
     puts '***** Topics *******'
@@ -39,7 +39,7 @@ class LoadDataJob < ApplicationJob
 
       #update progress
       progress += 1
-      ds.load_pct = 100.0 * (progress / item_count)
+      ds.load_pct = 100 * (progress / item_count)
       ds.save
 
       puts s.errors.full_messages unless s.errors.empty?
@@ -62,7 +62,7 @@ class LoadDataJob < ApplicationJob
       end
       #update progress
       progress += 1
-      ds.load_pct = 100.0 * (progress / item_count)
+      ds.load_pct = 100 * (progress / item_count)
       ds.save
     end
     puts "Unable to retrieve #{not_hit.count} sets of factors"

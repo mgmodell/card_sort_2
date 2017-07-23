@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20170723083524) do
     t.text "title"
     t.bigint "dataset_id"
     t.boolean "processed"
+    t.boolean "refs_processed"
     t.index ["dataset_id"], name: "index_sources_on_dataset_id"
     t.index ["topic_id"], name: "index_sources_on_topic_id"
   end
