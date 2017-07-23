@@ -11,7 +11,9 @@
     <%= link_to '[re-process dataset sources]', process_dataset_path( @dataset ) %></br>
 <ul><% @dataset.sources.each do |source| %>
   <li><%= link_to source.citation, source_path( source ) %> 
-    <%= link_to '[process]', process_source_path( source ) %>
+    <%= source.processed ? 'Processed' : 'Unprocessed' %>
+      <%= link_to '[process]', process_source_path( source ) %>
+    References: <%= source.refs_processed ? 'Fully Processed' : 'Incomplete' %>
   </li>
 <% end %></ul>
 

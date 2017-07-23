@@ -15,7 +15,7 @@ class SourcesController < ApplicationController
 
   def add_refs
     #Add any references here
-    @source.add_refs( params[ :sources ] )
+    @source.add_refs( source_text: params[ :sources ] )
     redirect_to source_path( @source )
   end
 

@@ -11,7 +11,7 @@ class PreProcSourceJob < ApplicationJob
       if !correctly_processed
         puts "\t:Was  : #{source.title}"
         puts "\t:Found: #{parsed_source[:title]}"
-        source.title = parsed_source[ :title ]
+        source.title = parsed_source[ :title ].capitalize
         puts "\t:Fixed"
       end
       if !correctly_processed
@@ -22,8 +22,8 @@ class PreProcSourceJob < ApplicationJob
         author_names = source.author_list.split( ' and ')
         author_names.each do |name|
           name_components = name.split( ', ')
-          g_name =  name_components[ 1 ]
-          f_name = name_components[ 0 ]
+          g_name =  name_components[ 1 ].capitalize
+          f_name = name_components[ 0 ].split(/\W+/).map{ |x| x.capitalize }*' '
 
           a = Author.where( given_name: g_name,
                             family_name: f_name ).take

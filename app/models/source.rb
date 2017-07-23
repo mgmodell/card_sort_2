@@ -2,7 +2,7 @@
 
 class Source < ApplicationRecord
   default_scope { order( :citation ) }
-  belongs_to :dataset, inverse_of: :sources
+  belongs_to :dataset, inverse_of: :sources, optional: true
   has_and_belongs_to_many :authors, inverse_of: :sources
   belongs_to :topic, inverse_of: :sources
   has_many :factors, inverse_of: :source, dependent: :destroy
