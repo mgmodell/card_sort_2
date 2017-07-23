@@ -45,6 +45,7 @@ gem 'stemmify'
 gem 'httparty'
 gem 'simple_form'
 gem 'd3-rails'
+gem 'sucker_punch'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

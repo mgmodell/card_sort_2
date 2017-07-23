@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170705112847) do
+ActiveRecord::Schema.define(version: 20170723083524) do
 
   create_table "authors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "given_name"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170705112847) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "load_pct"
     t.index ["user_id"], name: "index_datasets_on_user_id"
   end
 
@@ -65,6 +66,7 @@ ActiveRecord::Schema.define(version: 20170705112847) do
     t.datetime "updated_at", null: false
     t.text "title"
     t.bigint "dataset_id"
+    t.boolean "processed"
     t.index ["dataset_id"], name: "index_sources_on_dataset_id"
     t.index ["topic_id"], name: "index_sources_on_topic_id"
   end

@@ -5,7 +5,8 @@
   <%= @dataset.stems.uniq.count %> unique stems. So far, <%= @dataset.sources.count %>
   sources (below) contribute to this data.
 </p>
-<%= link_to '[re-process dataset sources]', process_dataset_path( @dataset ) %></br>
+<%= @dataset.percent_processed %>% Sources Processed&nbsp;
+    <%= link_to '[re-process dataset sources]', process_dataset_path( @dataset ) %></br>
 <ul><% @dataset.sources.each do |source| %>
   <li><%= link_to source.citation, source_path( source ) %> 
     <%= link_to '[process]', process_source_path( source ) %>
