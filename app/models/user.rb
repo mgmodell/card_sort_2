@@ -29,26 +29,31 @@ class User < ApplicationRecord
 
   def refresh_token_if_expired
     if token_expired?
+
       key = Rails.application.config.google_key
       secret = Rails.application.config.google_secret
       domain = Rails.application.config.google_domain
 
+      options = {
+        body: {
+          client_id: key,
+          client_secret: secret,
+          refresh_token: self.refresh_token,
+          grant_type: 'refresh_token'
+        },
+        headers: {
+          'Content-Type' => 'application/x-www-form-urlencoded'
+        }
+      }
 
-      response    = RestClient.post "#{domain}oauth2/token",
-                      :grant_type => 'refresh_token',
-                      :refresh_token => self.refresh_token,
-                      :client_id => key,
-                      :client_secret => secret
-      refreshhash = JSON.parse(response.body)
-  
-      token_will_change!
-      expires_at_will_change!
-  
-      self.token     = refreshhash['access_token']
-      self.expires_at = DateTime.now + refreshhash["expires_in"].to_i.seconds
-  
-      self.save
-      puts 'Saved'
+      response = HTTParty.post( "#{domain}oauth2/token",options )
+      if response.code == 200
+        self.token = response.parsed_response['access_token']
+        self.expires_at = DateTime.now + response.parsed_response['expires_in'].seconds
+        self.save
+      else
+        puts "Unable to refresh token: #{response.body}"
+      end
     end
   end
 

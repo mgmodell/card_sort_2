@@ -25,4 +25,5 @@
   <%= submit_tag 'Add ''em!' %>
 <% end %>
 
-<%= link_to "Edit Source", edit_source_path( @source ) %>
+<%= link_to "Edit Source", edit_source_path( @source ) %>&nbsp;|&nbsp;
+<%= link_to "Back to Dataset", dataset_path( @source.dataset ) %>

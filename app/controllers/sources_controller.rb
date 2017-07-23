@@ -30,6 +30,7 @@ class SourcesController < ApplicationController
 
   def data_proc
     @source.preproc
+    redirect_to source_path( @source )
   end
 
   def destroy

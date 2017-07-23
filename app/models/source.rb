@@ -78,7 +78,15 @@ class Source < ApplicationRecord
           end
           word_obj = Word.create( raw: result[:original], stem: stem )
         end
-        factor.words << word_obj unless factor.words.include? word_obj
+        word_found = factor.words.where( id: word_obj )
+        if word_found.count == 1
+          puts "which of the following is: #{word_found.take.raw}?"
+          factor.words.each do |wd|
+            puts "----#{wd.raw}"
+          end
+        else
+          factor.words << word_obj
+        end
       end
       factor.save
     end
