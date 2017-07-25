@@ -8,6 +8,6 @@ class Dataset < ApplicationRecord
   has_many :stems, through: :words
 
   def percent_processed
-    ( 100 * sources.where( processed: true ).count.to_f / sources.count ).to_i unless sources.count == 0
+    (100 * sources.where(processed: true).count.to_f / sources.count).to_i unless sources.count == 0
   end
 end

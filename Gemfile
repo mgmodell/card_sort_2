@@ -34,18 +34,18 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'anystyle-parser', '~> 0.8.2'
 gem 'citation'
+gem 'd3-rails'
 gem 'devise'
 gem 'google_drive'
+gem 'httparty'
 gem 'omniauth-google-oauth2'
+gem 'simple_form'
 gem 'soundex'
 gem 'spellchecker'
-gem 'stopwords-filter', require: 'stopwords'
-gem 'thesaurus'
 gem 'stemmify'
-gem 'httparty'
-gem 'simple_form'
-gem 'd3-rails'
+gem 'stopwords-filter', require: 'stopwords'
 gem 'sucker_punch'
+gem 'thesaurus'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -56,6 +56,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'railroady'
+  gem 'rubocop'
   gem 'selenium-webdriver'
 end
 

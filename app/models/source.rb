@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 class Source < ApplicationRecord
-  default_scope { order( :citation ) }
+  default_scope { order(:citation) }
   belongs_to :dataset, inverse_of: :sources, optional: true
   has_and_belongs_to_many :authors, inverse_of: :sources
   belongs_to :topic, inverse_of: :sources
   has_many :factors, inverse_of: :source, dependent: :destroy
 
-  has_and_belongs_to_many :refs, 
-              class_name: "Source", 
-              join_table: :references, 
-              foreign_key: :source_id, 
-              association_foreign_key: :reference_source_id,
-              dependent: :destroy
+  has_and_belongs_to_many :refs,
+                          class_name: 'Source',
+                          join_table: :references,
+                          foreign_key: :source_id,
+                          association_foreign_key: :reference_source_id,
+                          dependent: :destroy
 
   @@filter = Stopwords::Snowball::Filter.new('en')
 
@@ -22,13 +22,13 @@ class Source < ApplicationRecord
 
   def preproc
     self.processed = false
-    self.save
-    PreProcSourceJob.perform_later( source: self )
+    save
+    PreProcSourceJob.perform_later(source: self)
   end
 
-  def add_refs( source_text: )
+  def add_refs(source_text:)
     self.refs_processed = false
-    self.save
-    AddRefsFromBiblioJob.perform_later( source_text: source_text, source: self )
+    save
+    AddRefsFromBiblioJob.perform_later(source_text: source_text, source: self)
   end
 end

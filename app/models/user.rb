@@ -38,7 +38,7 @@ class User < ApplicationRecord
         body: {
           client_id: key,
           client_secret: secret,
-          refresh_token: self.refresh_token,
+          refresh_token: refresh_token,
           grant_type: 'refresh_token'
         },
         headers: {
@@ -46,11 +46,11 @@ class User < ApplicationRecord
         }
       }
 
-      response = HTTParty.post( "#{domain}oauth2/token",options )
+      response = HTTParty.post("#{domain}oauth2/token", options)
       if response.code == 200
         self.token = response.parsed_response['access_token']
         self.expires_at = DateTime.now + response.parsed_response['expires_in'].seconds
-        self.save
+        save
       else
         puts "Unable to refresh token: #{response.body}"
       end
@@ -58,7 +58,7 @@ class User < ApplicationRecord
   end
 
   def token_expired?
-    expiry = Time.at(self.expires_at) 
+    expiry = Time.at(expires_at)
     return true if expiry < Time.now # expired token, so we should quickly return
     token_expires_at = expiry
     save if changed?
