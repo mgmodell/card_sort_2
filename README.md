@@ -8,6 +8,7 @@ Some Resources
 TODO
 
 * Complicate spell check
+* Integrate Thesaurus
 * Build histogram
 * Build family tree
 * Build cluster map

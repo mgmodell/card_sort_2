@@ -15,6 +15,21 @@
   <li><%= author.given_name %> <%= author.family_name %></li>
 <% end %></ul>
 
+<h2>Factors:</h2>
+<ul><% @source.factors.each do |factor| %>
+  <li>
+    <%= factor.text %>
+    <ul>
+    <% factor.words.each do |word| %>
+      <li>
+        <%= word.raw %> | <%= word.stem.word %>
+      </li>
+    <% end %>
+    </ul>
+    <li>Unverified: <%= factor.unverified %></li>
+  </li>
+<% end %></ul>
+
 <h2>Cited Sources:</h2>
 <ul><% @source.refs.each do |ref| %>
   <li><%= ref.citation %></li>

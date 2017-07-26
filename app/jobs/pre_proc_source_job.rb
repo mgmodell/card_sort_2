@@ -54,12 +54,15 @@ class PreProcSourceJob < ApplicationJob
         word_obj = Word.where(raw: result[:original]).take
 
         if word_obj.nil?
-          stemmed = result[:correct] ? result[:original].stem :
-                              result[:suggestions][0].stem
-          puts "\t\t\t stemmed: #{stemmed}"
-          stem = Stem.where(word: stemmed).take
-          stem = Stem.create(word: stemmed) if stem.nil?
-          word_obj = Word.create(raw: result[:original], stem: stem)
+          if result[:correct]
+            stemmed = result[:original].stem
+            puts "\t\t\t stemmed: #{stemmed}"
+            stem = Stem.where(word: stemmed).take
+            stem = Stem.create(word: stemmed) if stem.nil?
+            word_obj = Word.create(raw: result[:original], stem: stem)
+          else
+            factor.unverified += " " + result[ :original ]
+          end
         end
         word_found = factor.words.where(id: word_obj)
         if word_found.count == 1
