@@ -8,10 +8,14 @@
 <%= @dataset.percent_processed %>% Sources Processed&nbsp;
     <%= link_to '[re-process dataset sources]', process_dataset_path( @dataset ) %></br>
 <ul><% @dataset.sources.each do |source| %>
-  <li><%= link_to source.citation, source_path( source ) %> 
-    <%= source.processed ? 'Processed' : 'Unprocessed' %>
-      <%= link_to '[process]', process_source_path( source ) %>
-    References: <%= source.refs_processed ? 'Fully Processed' : 'Incomplete' %>
+  <li>
+     <%= link_to source.citation, source_path( source ) %> 
+      <ul>
+        <li><%= source.processed ? 'Processed' : 'Unprocessed' %></li>
+        <li><%= link_to '[process]', process_source_path( source ) %></li>
+        <li>References: <%= source.refs_processed ? 'Fully Processed' : 'Incomplete' %></li>
+        <li><%= source.unverifieds.blank? ? 'OK' : '<strong>spelling problems</strong>' %></li>
+      </ul>
   </li>
 <% end %></ul>
 

@@ -10,6 +10,16 @@
 
 <i>Citation:</strong> <%= @source.citation %></i>
 
+<h2>Spelling problems:</h2>
+<ul><% @source.unverifieds.each do |unver| %>
+  <li>
+    <%= unver %>
+    <ol><% Spellchecker.check( unver, dictionary = 'en' )[ 0 ][:suggestions].each do |sugg| %>
+      <li><%= sugg %></li>
+    <% end %></ol>
+  </li>
+<% end %></ul>
+
 <h2>Source Authors:</h2>
 <ul><% @source.authors.each do |author| %>
   <li><%= author.given_name %> <%= author.family_name %></li>
@@ -29,6 +39,7 @@
     <li>Unverified: <%= factor.unverified %></li>
   </li>
 <% end %></ul>
+
 
 <h2>Cited Sources:</h2>
 <ul><% @source.refs.each do |ref| %>

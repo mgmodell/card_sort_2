@@ -31,4 +31,12 @@ class Source < ApplicationRecord
     save
     AddRefsFromBiblioJob.perform_later(source_text: source_text, source: self)
   end
+
+  def unverifieds
+    unverifieds = []
+    factors.each do |factor|
+      unverifieds.concatenate( factor.unverified.split(/\W+/) ) unless factor.unverified.blank?
+    end
+    unverifieds
+  end
 end

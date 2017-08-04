@@ -62,6 +62,7 @@ class PreProcSourceJob < ApplicationJob
             word_obj = Word.create(raw: result[:original], stem: stem)
           else
             factor.unverified += " " + result[ :original ]
+            byebug
           end
         end
         word_found = factor.words.where(id: word_obj)
