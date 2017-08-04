@@ -7,7 +7,7 @@ Some Resources
 
 TODO
 
-* Complicate spell check
+* ~~Complicate spell check~~
 * Integrate Thesaurus
 * Build histogram
 * Build family tree
