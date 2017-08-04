@@ -6,15 +6,10 @@ class PreProcSourceJob < ApplicationJob
   def perform(source:)
     parsed = Anystyle.parse source.citation
 
-    puts "-- Got #{parsed.count} sources"
     parsed.each do |parsed_source|
       correctly_processed = parsed_source[:title] == source.title
-      puts "\t:Title correctly identified? #{correctly_processed}"
       unless correctly_processed
-        puts "\t:Was  : #{source.title}"
-        puts "\t:Found: #{parsed_source[:title]}"
         source.title = parsed_source[:title].capitalize
-        puts "\t:Fixed"
       end
       source.author_list = parsed_source[:author] unless correctly_processed
       unless source.author_list.blank?
@@ -28,13 +23,11 @@ class PreProcSourceJob < ApplicationJob
           a = Author.where(given_name: g_name,
                            family_name: f_name).take
           if a.nil?
-            puts "\t: #{g_name} #{f_name} not found"
             a = Author.create(
               given_name: g_name,
               family_name: f_name
             )
           end
-          puts "\tAuthor: #{a.given_name} #{a.family_name}"
           source.authors << a
         end
       end
@@ -42,13 +35,9 @@ class PreProcSourceJob < ApplicationJob
     end
 
     # Take care of item data
-    puts '--------- Factors'
     source.factors.each do |factor|
-      puts "\t\t #{factor.text}"
 
       filtered = Source.filter.filter(factor.text.split(/\W+/))
-      puts "\t\t\t split: #{factor.text.split(/\W+/)}"
-      puts "\t\t\t filt:  #{filtered}"
       filtered.each do |word|
         result = Spellchecker.check(word, dictionary = 'en')[0]
         word_obj = Word.where(raw: result[:original]).take
@@ -56,7 +45,6 @@ class PreProcSourceJob < ApplicationJob
         if word_obj.nil?
           if result[:correct]
             stemmed = result[:original].stem
-            puts "\t\t\t stemmed: #{stemmed}"
             stem = Stem.where(word: stemmed).take
             stem = Stem.create(word: stemmed) if stem.nil?
             word_obj = Word.create(raw: result[:original], stem: stem)
@@ -65,13 +53,7 @@ class PreProcSourceJob < ApplicationJob
             byebug
           end
         end
-        word_found = factor.words.where(id: word_obj)
-        if word_found.count == 1
-          puts "which of the following is: #{word_found.take.raw}?"
-          factor.words.each do |wd|
-            puts "----#{wd.raw}"
-          end
-        else
+        if factor.words.where(id: word_obj).empty?
           factor.words << word_obj
         end
       end
