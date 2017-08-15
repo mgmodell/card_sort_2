@@ -2,13 +2,15 @@
 <strong>Title:</strong> <%= @source.title %></br>
 <strong>Year:</strong> <%= @source.year %></br>
 <strong>Purpose:</strong> <%= @source.purpose %></br>
+<% unless @source.discard_reason.blank? %>
 <strong>Discard Reason:</strong> <%= @source.discard_reason %></br>
+<% end %>
 <strong>Topic:</strong> <%= @source.topic.name %></br>
 <strong>Processed:</strong> <%= @source.processed %></br>
 </br>
 </br>
 
-<i>Citation:</strong> <%= @source.citation %></i>
+<i><strong>Citation:</strong> <%= @source.citation %></i>
 
 <h2>Spelling problems:</h2>
 <ul><% @source.unverifieds.each do |unver| %>
@@ -36,7 +38,9 @@
       </li>
     <% end %>
     </ul>
+    <% unless factor.unverified.blank? %>
     <li>Unverified: <%= factor.unverified %></li>
+    <% end %>
   </li>
 <% end %></ul>
 
