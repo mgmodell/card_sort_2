@@ -6,6 +6,7 @@ class Dataset < ApplicationRecord
   has_many :factors, through: :sources
   has_many :words, through: :factors
   has_many :stems, through: :words
+  has_many :synonyms, through: :words
 
   def percent_processed
     (100 * sources.where(processed: true).count.to_f / sources.count).to_i unless sources.count == 0

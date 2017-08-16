@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725141651) do
+ActiveRecord::Schema.define(version: 20170815074726) do
 
   create_table "authors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "given_name"
@@ -79,6 +79,18 @@ ActiveRecord::Schema.define(version: 20170725141651) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "synonyms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "word"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "synonyms_words", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "word_id", null: false
+    t.bigint "synonym_id", null: false
+    t.index ["synonym_id", "word_id"], name: "index_synonyms_words_on_synonym_id_and_word_id", unique: true
+  end
+
   create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.string "description"
@@ -111,6 +123,7 @@ ActiveRecord::Schema.define(version: 20170725141651) do
     t.bigint "stem_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "syn_checked", default: false, null: false
     t.index ["stem_id"], name: "index_words_on_stem_id"
   end
 

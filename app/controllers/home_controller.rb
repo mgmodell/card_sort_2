@@ -19,4 +19,11 @@ class HomeController < ApplicationController
     LoadDataJob.perform_later(task_user: current_user, key: key)
     redirect_to :root
   end
+
+  # This is not thread safe!!!
+  # Would be good to add a mutex
+  def update_synonyms
+    UpdateThesaurusJob.perform_later
+    redirect_to :root
+  end
 end

@@ -7,6 +7,7 @@
           <%= link_to 'Destroy', ds, method: :delete, data: { confirm: "Are you sure?" } %>]</li>
   <% end %>
 </ul>
+<%= link_to "Consult Thesaurus", update_synonyms_path %></br>
 <h1>Your Spreadsheets</h1>
 <ul>
   <% @sheets.each do |ss| %>

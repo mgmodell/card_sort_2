@@ -2,7 +2,8 @@
 <strong>Name:</strong> <%= @dataset.name %></br>
 <p>This dataset contains <%= @dataset.factors.count %> factors, yielding
   <%= @dataset.words.uniq.count %> distinct words yielding
-  <%= @dataset.stems.uniq.count %> unique stems. So far, <%= @dataset.sources.count %>
+  <%= @dataset.stems.uniq.count %> unique stems and 
+  <%= @dataset.synonyms.uniq.count %> synonyms. So far, <%= @dataset.sources.count %>
   sources (below) contribute to this data.
 </p>
 <%= @dataset.percent_processed %>% Sources Processed&nbsp;
