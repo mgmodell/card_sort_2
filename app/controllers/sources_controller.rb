@@ -3,7 +3,13 @@
 class SourcesController < ApplicationController
   before_action :set_source
 
-  def show; end
+  def show
+    @stats = {}
+    @stats[ 'top words' ] = @source.words.group( :raw ).count
+    @stats[ 'top synonyms' ] = @source.synonyms.group( :word ).count
+    @stats[ 'top stems' ]  = @source.stems.group( :word ).count
+  
+  end
 
   def edit; end
 

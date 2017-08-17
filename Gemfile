@@ -46,6 +46,7 @@ gem 'stemmify'
 gem 'stopwords-filter', require: 'stopwords'
 gem 'sucker_punch'
 gem 'thesaurus'
+gem 'descriptive_statistics', '~> 2.4.0', :require => 'descriptive_statistics/safe'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

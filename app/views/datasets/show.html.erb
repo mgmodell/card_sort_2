@@ -6,6 +6,33 @@
   <%= @dataset.synonyms.uniq.count %> synonyms. So far, <%= @dataset.sources.count %>
   sources (below) contribute to this data.
 </p>
+<table>
+    <tr>
+      <th>Type</th>
+      <th>Entry Count</th>
+      <th>Min</th>
+      <th>Max</th>
+      <th>Mean</th>
+      <th>Median</th>
+      <th>Standard Deviation</th>
+      <th>Range</th>
+      <th>Mode</th>
+    </tr>
+    <% @stats.each do |key,counts|
+      stat_pack = counts.values.extend(DescriptiveStatistics)%>
+    <tr>
+      <th><%= key %></th>
+      <th><%= stat_pack.count %></th>
+      <th><%= stat_pack.min %></th>
+      <th><%= stat_pack.max %></th>
+      <th><%= stat_pack.mean %></th>
+      <th><%= stat_pack.median %></th>
+      <th><%= stat_pack.standard_deviation %></th>
+      <th><%= stat_pack.range %></th>
+      <th><%= stat_pack.mode %></th>
+    </tr>
+    <% end %>
+</table>
 <%= @dataset.percent_processed %>% Sources Processed&nbsp;
     <%= link_to '[re-process dataset sources]', process_dataset_path( @dataset ) %></br>
 <ul><% @dataset.sources.each do |source| %>

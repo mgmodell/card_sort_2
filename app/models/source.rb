@@ -6,6 +6,9 @@ class Source < ApplicationRecord
   has_and_belongs_to_many :authors, inverse_of: :sources
   belongs_to :topic, inverse_of: :sources
   has_many :factors, inverse_of: :source, dependent: :destroy
+  has_many :words, through: :factors
+  has_many :stems, through: :words
+  has_many :synonyms, through: :words
 
   has_and_belongs_to_many :refs,
                           class_name: 'Source',

@@ -5,6 +5,10 @@ class DatasetsController < ApplicationController
 
   def show
     # Build out any history support.
+    @stats = {}
+    @stats[ 'top words' ] = @dataset.words.group( :raw ).count
+    @stats[ 'top synonyms' ] = @dataset.synonyms.group( :word ).count
+    @stats[ 'top stems' ]  = @dataset.stems.group( :word ).count
 
     # Histogram info
     stem_hist = @dataset.sources.joins(factors: { words: :stem }).group('factors.id').count
