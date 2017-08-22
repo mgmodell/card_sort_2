@@ -8,9 +8,7 @@ class PreProcSourceJob < ApplicationJob
 
     parsed.each do |parsed_source|
       correctly_processed = parsed_source[:title] == source.title
-      unless correctly_processed
-        source.title = parsed_source[:title].capitalize
-      end
+      source.title = parsed_source[:title].capitalize unless correctly_processed
       source.author_list = parsed_source[:author] unless correctly_processed
       unless source.author_list.blank?
         source.authors = []
@@ -36,7 +34,6 @@ class PreProcSourceJob < ApplicationJob
 
     # Take care of item data
     source.factors.each do |factor|
-
       filtered = Source.filter.filter(factor.text.split(/\W+/))
       filtered.each do |word|
         result = Spellchecker.check(word, dictionary = 'en')[0]
@@ -49,13 +46,11 @@ class PreProcSourceJob < ApplicationJob
             stem = Stem.create(word: stemmed) if stem.nil?
             word_obj = Word.create(raw: result[:original], stem: stem)
           else
-            factor.unverified += " " + result[ :original ]
+            factor.unverified += ' ' + result[:original]
             byebug
           end
         end
-        if factor.words.where(id: word_obj).empty?
-          factor.words << word_obj
-        end
+        factor.words << word_obj if factor.words.where(id: word_obj).empty?
       end
       factor.save
     end
