@@ -8,6 +8,10 @@
 <strong>Topic:</strong> <%= @source.topic.name %></br>
 <strong>Processed:</strong> <%= @source.processed %></br>
 </br>
+<h2>Source Authors:</h2>
+<ul><% @source.authors.each do |author| %>
+  <li><%= author.given_name %> <%= author.family_name %></li>
+<% end %></ul>
 </br>
 <table>
     <tr>
@@ -49,10 +53,10 @@
   </li>
 <% end %></ul>
 
-<h2>Source Authors:</h2>
-<ul><% @source.authors.each do |author| %>
-  <li><%= author.given_name %> <%= author.family_name %></li>
-<% end %></ul>
+<svg id="word_counts" width="700" height="700" font-family="sans-serif"
+  font-size="10" text-anchor="middle">
+</svg>
+
 
 <h2>Factors:</h2>
 <ul><% @source.factors.each do |factor| %>

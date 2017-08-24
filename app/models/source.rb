@@ -38,7 +38,7 @@ class Source < ApplicationRecord
   def unverifieds
     unverifieds = []
     factors.each do |factor|
-      unverifieds.concatenate( factor.unverified.split(/\W+/) ) unless factor.unverified.blank?
+      unverifieds.concat( factor.unverified.split(/\W+/) ) unless factor.unverified.blank?
     end
     unverifieds
   end

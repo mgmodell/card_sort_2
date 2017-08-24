@@ -46,14 +46,27 @@ class PreProcSourceJob < ApplicationJob
             stem = Stem.create(word: stemmed) if stem.nil?
             word_obj = Word.create(raw: result[:original], stem: stem)
           else
-            factor.unverified += ' ' + result[:original]
-            byebug
+            if factor.unverified.blank?
+              factor.unverified = result[ :original ]
+            else
+              factor.unverified += ' ' + result[:original]
+            end
           end
         end
-        factor.words << word_obj if factor.words.where(id: word_obj).empty?
+        if word_obj.present? && factor.words.where(id: word_obj).empty?
+          factor.words << word_obj
+        end
       end
       factor.save
     end
+    #Process the terms
+    to_cache = source.words.group( :raw ).count
+    source.word_cache = to_cache.to_json
+    to_cache = source.stems.group( :word ).count
+    source.stem_cache = to_cache.to_json
+    to_cache = source.synonyms.group( :word ).count
+    source.word_cache = to_cache.to_json
+
     source.processed = true
     source.save
   end
