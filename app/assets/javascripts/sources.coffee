@@ -3,7 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  $('.word_count_btn' ).change ->
+  $('#word_count_opt' ).change ->
+    console.log 'hi'
     d3.json '/sources/wordcounts/', (d) ->
       console.log 'hi'
       console.log d

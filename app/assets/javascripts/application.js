@@ -14,4 +14,4 @@
 //= require jquery2
 //= require jquery_ujs
 //= require d3
-//= require_tree .
+//= require sources
