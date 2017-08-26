@@ -32,6 +32,21 @@ class SourcesController < ApplicationController
     redirect_to source_path(@source)
   end
 
+  def get_data
+    @count_data = Hash.new
+    case params[:type].downcase
+    when 'stems'
+      @count_data =  JSON.parse @source.stem_cache
+    when 'words'
+      @count_data =  JSON.parse @source.word_cache
+    when 'synonyms'
+      @count_data =  JSON.parse @source.synonym_cache
+    end
+    respond_to do |format|
+      format.json
+    end
+  end
+
   def destroy
     @source.destroy
     redirect_to dataset_path(@source.dataset)
