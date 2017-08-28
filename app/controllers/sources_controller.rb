@@ -33,6 +33,7 @@ class SourcesController < ApplicationController
   end
 
   def get_data
+    byebug
     @count_data = Hash.new
     case params[:type].downcase
     when 'stems'
@@ -42,8 +43,9 @@ class SourcesController < ApplicationController
     when 'synonyms'
       @count_data =  JSON.parse @source.synonym_cache
     end
+    puts "hello"
     respond_to do |format|
-      format.json
+      format.json {render json: @count_data}
     end
   end
 

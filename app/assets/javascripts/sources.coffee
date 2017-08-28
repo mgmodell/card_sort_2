@@ -4,10 +4,9 @@
 
 $(document).ready ->
   $('#word_count_opt' ).change ->
-    console.log 'hi'
-    console.log $(this).val()
-    url = '/sources/data/' + $('#source_id').val() + '/' + $(this).val() + '/';
+    url = '/sources/data/' + $('#source_id').val() + '/' + $(this).val()
     d3.json url, (d) ->
+      console.log "here!"
       console.log d
       svg = d3.select( '#word_count' )
       width = +svg.attr( 'width' )
