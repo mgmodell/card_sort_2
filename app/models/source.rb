@@ -38,20 +38,20 @@ class Source < ApplicationRecord
   def unverifieds
     unverifieds = []
     factors.each do |factor|
-      unverifieds.concat( factor.unverified.split(/\W+/) ) unless factor.unverified.blank?
+      unverifieds.concat(factor.unverified.split(/\W+/)) unless factor.unverified.blank?
     end
     unverifieds
   end
 
   def get_word_counts
-    word_cache.blank? ? words.group( :raw ).count : JSON.parse( word_cache )
+    word_cache.blank? ? words.group(:raw).count : JSON.parse(word_cache)
   end
 
   def get_stem_counts
-    stem_cache.blank? ? stems.group( :word ).count : JSON.parse( stem_cache )
+    stem_cache.blank? ? stems.group(:word).count : JSON.parse(stem_cache)
   end
 
   def get_synonym_counts
-    synonym_cache.blank? ? synonyms.group( :word ).count : JSON.parse( synonym_cache )
+    synonym_cache.blank? ? synonyms.group(:word).count : JSON.parse(synonym_cache)
   end
 end

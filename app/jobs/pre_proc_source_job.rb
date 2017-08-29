@@ -47,7 +47,7 @@ class PreProcSourceJob < ApplicationJob
             word_obj = Word.create(raw: result[:original], stem: stem)
           else
             if factor.unverified.blank?
-              factor.unverified = result[ :original ]
+              factor.unverified = result[:original]
             else
               factor.unverified += ' ' + result[:original]
             end
@@ -59,12 +59,12 @@ class PreProcSourceJob < ApplicationJob
       end
       factor.save
     end
-    #Process the terms
-    to_cache = source.words.group( :raw ).count
+    # Process the terms
+    to_cache = source.words.group(:raw).count
     source.word_cache = to_cache.to_json
-    to_cache = source.stems.group( :word ).count
+    to_cache = source.stems.group(:word).count
     source.stem_cache = to_cache.to_json
-    to_cache = source.synonyms.group( :word ).count
+    to_cache = source.synonyms.group(:word).count
     source.synonym_cache = to_cache.to_json
 
     source.processed = true

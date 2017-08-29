@@ -13,25 +13,25 @@ class Dataset < ApplicationRecord
   end
 
   def get_word_counts
-    counts = Hash.new
+    counts = {}
     sources.find_each do |source|
-      counts.merge!( source.get_word_counts ){|key,v1,v2| v1 + v2 }
+      counts.merge!(source.get_word_counts) { |_key, v1, v2| v1 + v2 }
     end
     counts
   end
 
   def get_stem_counts
-    counts = Hash.new
+    counts = {}
     sources.each do |source|
-      counts.merge!( source.get_stem_counts ){|key,v1,v2| v1 + v2 }
+      counts.merge!(source.get_stem_counts) { |_key, v1, v2| v1 + v2 }
     end
     counts
   end
 
   def get_synonym_counts
-    counts = Hash.new
+    counts = {}
     sources.each do |source|
-      counts.merge!( source.get_synonym_counts ){|key,v1,v2| v1 + v2 }
+      counts.merge!(source.get_synonym_counts) { |_key, v1, v2| v1 + v2 }
     end
     counts
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUnverifiedToFactor < ActiveRecord::Migration[5.1]
   def change
     add_column :factors, :unverified, :text

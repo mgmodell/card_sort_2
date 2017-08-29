@@ -6,9 +6,9 @@ class DatasetsController < ApplicationController
   def show
     # Build out any history support.
     @stats = {}
-    @stats[ 'top words' ] = @dataset.words.group( :raw ).count
-    @stats[ 'top synonyms' ] = @dataset.synonyms.group( :word ).count
-    @stats[ 'top stems' ]  = @dataset.stems.group( :word ).count
+    @stats['top words'] = @dataset.words.group(:raw).count
+    @stats['top synonyms'] = @dataset.synonyms.group(:word).count
+    @stats['top stems'] = @dataset.stems.group(:word).count
 
     # Histogram info
     stem_hist = @dataset.sources.joins(factors: { words: :stem }).group('factors.id').count
@@ -35,7 +35,7 @@ class DatasetsController < ApplicationController
   end
 
   def get_data
-    counts = Hash.new
+    counts = {}
     case params[:type].downcase
     when 'stems'
       counts = @dataset.get_stem_counts
@@ -49,7 +49,7 @@ class DatasetsController < ApplicationController
     puts counts
 
     respond_to do |format|
-      format.json { render json: counts.to_a}
+      format.json { render json: counts.to_a }
     end
   end
 

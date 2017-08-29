@@ -5,10 +5,9 @@ class SourcesController < ApplicationController
 
   def show
     @stats = {}
-    @stats[ 'top words' ] = @source.words.group( :raw ).count
-    @stats[ 'top synonyms' ] = @source.synonyms.group( :word ).count
-    @stats[ 'top stems' ]  = @source.stems.group( :word ).count
-  
+    @stats['top words'] = @source.words.group(:raw).count
+    @stats['top synonyms'] = @source.synonyms.group(:word).count
+    @stats['top stems'] = @source.stems.group(:word).count
   end
 
   def edit; end
@@ -33,7 +32,7 @@ class SourcesController < ApplicationController
   end
 
   def get_data
-    counts = Hash.new
+    counts = {}
     case params[:type].downcase
     when 'stems'
       counts =  @source.get_stem_counts
@@ -44,7 +43,7 @@ class SourcesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render json: counts.to_a}
+      format.json { render json: counts.to_a }
     end
   end
 
