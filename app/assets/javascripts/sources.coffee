@@ -38,7 +38,7 @@ $(document).ready ->
     
       node.append( 'circle' )
         .attr( 'id', (d) ->
-          d[ 0 ]
+          d.data[ 0 ]
         )
         .attr( 'r', (d) ->
           d.r
@@ -49,18 +49,22 @@ $(document).ready ->
 
       node.append( 'clipPath' )
         .attr( 'id', (d) ->
-          'clip-' + d[ 0 ]
+          'clip-' + d.data[ 0 ]
         )
         .append( 'use' )
         .attr( 'xlink:href', (d) ->
-          '#' + d[ 0 ]
+          '#' + d.data[ 0 ]
         )
 
       node.append( 'text' )
         .attr( 'clip-path', (d) ->
-          'url(#clip-' + d[ 0 ] + ')'
+          'url(#clip-' + d.data[ 0 ] + ')'
         )
         .selectAll( 'tspan' )
+        .data( (d) ->
+          d.data[ 0 ]
+        )
+        .enter().append( 'tspan' )
         .attr( 'x', 0 )
         .attr( 'y', (d, i, nodes) ->
           13 + (i - nodes.length / 2 - 0.5) * 10
@@ -71,8 +75,6 @@ $(document).ready ->
 
       node.append( 'title' )
         .text( (d) ->
-          d[ 0 ] + '\n' + format( d[ 1 ] )
+          d.data[ 0 ] + '\n' + format( d.data[ 1 ] )
         )
 
-      console.log "here!"
-      console.log d
