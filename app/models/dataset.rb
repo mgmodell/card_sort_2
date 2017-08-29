@@ -11,4 +11,28 @@ class Dataset < ApplicationRecord
   def percent_processed
     (100 * sources.where(processed: true).count.to_f / sources.count).to_i unless sources.count == 0
   end
+
+  def get_word_counts
+    counts = Hash.new
+    sources.find_each do |source|
+      counts.merge!( source.get_word_counts ){|key,v1,v2| v1 + v2 }
+    end
+    counts
+  end
+
+  def get_stem_counts
+    counts = Hash.new
+    sources.each do |source|
+      counts.merge!( source.get_stem_counts ){|key,v1,v2| v1 + v2 }
+    end
+    counts
+  end
+
+  def get_synonym_counts
+    counts = Hash.new
+    sources.each do |source|
+      counts.merge!( source.get_synonym_counts ){|key,v1,v2| v1 + v2 }
+    end
+    counts
+  end
 end

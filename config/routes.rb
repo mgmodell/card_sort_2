@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     constraints: lambda { |req| req.format == :json }
 
   get 'datasets/process/:id' => 'datasets#data_proc', as: 'process_dataset'
+  get 'datasets/data/:id/:type' => 'datasets#get_data', as: 'dataset_data',
+    constraints: lambda { |req| req.format == :json }
 
   get 'home/pull/:key' => 'home#pull', as: 'new_dataset'
   get 'home/update_synonyms' => 'home#update_synonyms', as: 'update_synonyms'

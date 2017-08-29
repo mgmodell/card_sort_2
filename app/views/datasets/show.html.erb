@@ -31,6 +31,19 @@
     </tr>
     <% end %>
 </table>
+<br><br>
+
+<input type="hidden" id="granularity" value="datasets">
+<input type="hidden" id="source_id" value="<%=@dataset.id %>">
+<select id="word_count_opt">
+  <option>Words</option>
+  <option>Stems</option>
+  <option>Synonyms</option>
+</select><br>
+
+<svg id="word_counts" width="500" height="500" font-family="sans-serif"
+  font-size="10" text-anchor="middle">
+</svg>
 <%= @dataset.percent_processed %>% Sources Processed&nbsp;
     <%= link_to '[re-process dataset sources]', process_dataset_path( @dataset ) %></br>
 <ul><% @dataset.sources.each do |source| %>

@@ -5,7 +5,7 @@
 #Building a D3 Bubble Chart
 $(document).ready ->
   $('#word_count_opt' ).change ->
-    url = '/sources/data/' + $('#source_id').val() + '/' + $(this).val() + '.json'
+    url = '/' + $('#granularity').val() + '/data/' + $('#source_id').val() + '/' + $(this).val() + '.json'
     d3.json url, (d) ->
       svg = d3.selectAll( '#word_counts > *' ).remove()
       svg = d3.select( '#word_counts' )

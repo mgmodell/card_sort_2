@@ -34,6 +34,25 @@ class DatasetsController < ApplicationController
     redirect_to dataset_path(@dataset)
   end
 
+  def get_data
+    counts = Hash.new
+    case params[:type].downcase
+    when 'stems'
+      counts = @dataset.get_stem_counts
+    when 'words'
+      counts = @dataset.get_word_counts
+    when 'synonyms'
+      counts = @dataset.get_synonym_counts
+    end
+
+    puts 'here!'
+    puts counts
+
+    respond_to do |format|
+      format.json { render json: counts.to_a}
+    end
+  end
+
   private
 
   def set_dataset

@@ -43,12 +43,8 @@ class SourcesController < ApplicationController
       counts =  @source.get_synonym_counts
     end
 
-    @count_data = JSON.parse( counts ).to_a
-    puts counts
-
-
     respond_to do |format|
-      format.json { render json: @count_data}
+      format.json { render json: counts.to_a}
     end
   end
 
