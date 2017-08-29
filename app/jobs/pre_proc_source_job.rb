@@ -65,7 +65,7 @@ class PreProcSourceJob < ApplicationJob
     to_cache = source.stems.group( :word ).count
     source.stem_cache = to_cache.to_json
     to_cache = source.synonyms.group( :word ).count
-    source.word_cache = to_cache.to_json
+    source.synonym_cache = to_cache.to_json
 
     source.processed = true
     source.save

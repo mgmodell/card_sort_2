@@ -36,11 +36,11 @@ class SourcesController < ApplicationController
     counts = Hash.new
     case params[:type].downcase
     when 'stems'
-      counts =  JSON.parse @source.stem_cache
+      counts =  @source.get_stem_counts
     when 'words'
-      counts =  JSON.parse @source.word_cache
+      counts =  @source.get_word_counts
     when 'synonyms'
-      counts =  JSON.parse @source.synonym_cache
+      counts =  @source.get_synonym_counts
     end
 
     @count_data = counts.to_a

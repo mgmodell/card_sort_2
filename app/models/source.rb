@@ -42,4 +42,16 @@ class Source < ApplicationRecord
     end
     unverifieds
   end
+
+  def get_word_counts
+    word_cache.nil? ? source.words.group( :raw ).count.to_json : word_cache
+  end
+
+  def get_stem_counts
+    stem_cache.nil? ? source.stems.group( :word ).count.to_json : stem_cache
+  end
+
+  def get_synonym_counts
+    synonym_cache.nil? ? source.synonyms.group( :word ).count.to_json : synonym_cache
+  end
 end
