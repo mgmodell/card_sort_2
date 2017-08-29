@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
   post 'sources/add_refs/:id' => 'sources#add_refs', as: 'add_refs_to_source'
   get 'sources/process/:id' => 'sources#data_proc', as: 'process_source'
-  get 'sources/data/:id/:type' => 'sources#get_data', as: 'source_data'
+  get 'sources/data/:id/:type' => 'sources#get_data', as: 'source_data',
+    constraints: lambda { |req| req.format == :json }
 
   get 'datasets/process/:id' => 'datasets#data_proc', as: 'process_dataset'
 

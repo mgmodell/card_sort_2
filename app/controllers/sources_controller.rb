@@ -33,17 +33,19 @@ class SourcesController < ApplicationController
   end
 
   def get_data
-    byebug
-    @count_data = Hash.new
+    counts = Hash.new
     case params[:type].downcase
     when 'stems'
-      @count_data =  JSON.parse @source.stem_cache
+      counts =  JSON.parse @source.stem_cache
     when 'words'
-      @count_data =  JSON.parse @source.word_cache
+      counts =  JSON.parse @source.word_cache
     when 'synonyms'
-      @count_data =  JSON.parse @source.synonym_cache
+      counts =  JSON.parse @source.synonym_cache
     end
-    puts "hello"
+
+    @count_data = counts.to_a
+
+
     respond_to do |format|
       format.json {render json: @count_data}
     end

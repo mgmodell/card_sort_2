@@ -43,23 +43,26 @@
 
 <i><strong>Citation:</strong> <%= @source.citation %></i>
 
-<h2>Spelling problems:</h2>
-<ul><% @source.unverifieds.each do |unver| %>
-  <li>
-    <%= unver %>
-    <ol><% Spellchecker.check( unver, dictionary = 'en' )[ 0 ][:suggestions].each do |sugg| %>
-      <li><%= sugg %></li>
-    <% end %></ol>
-  </li>
-<% end %></ul>
+<% unless @source.unverifieds.empty? %>
+  <h2>Spelling problems:</h2>
+  <ul><% @source.unverifieds.each do |unver| %>
+    <li>
+      <%= unver %>
+      <ol><% Spellchecker.check( unver, dictionary = 'en' )[ 0 ][:suggestions].each do |sugg| %>
+        <li><%= sugg %></li>
+      <% end %></ol>
+    </li>
+  <% end %></ul>
+<% end %>
+<br><br>
 
 <input type="hidden" id="source_id" value="<%=@source.id %>">
 <select id="word_count_opt">
   <option>Words</option>
   <option>Stems</option>
   <option>Synonyms</option>
-</select>
-<svg id="word_counts" width="400" height="400" font-family="sans-serif"
+</select><br>
+<svg id="word_counts" width="900" height="900" font-family="sans-serif"
   font-size="10" text-anchor="middle">
 </svg>
 
