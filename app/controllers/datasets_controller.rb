@@ -5,10 +5,8 @@ class DatasetsController < ApplicationController
 
   def show
     # Build out any history support.
-    @stats = Hash.new
-    if @dataset.stats_cache.present?
-      @stats = JSON.parse( @dataset.stats_cache )
-    end
+    @stats = {}
+    @stats = JSON.parse(@dataset.stats_cache) if @dataset.stats_cache.present?
 
     # Histogram info
     stem_hist = @dataset.sources.joins(factors: { words: :stem }).group('factors.id').count
@@ -35,7 +33,7 @@ class DatasetsController < ApplicationController
   end
 
   def calc_stats
-    DatasetStatsJob.perform_later( dataset: @dataset )
+    DatasetStatsJob.perform_later(dataset: @dataset)
     redirect_to dataset_path(@dataset)
   end
 
