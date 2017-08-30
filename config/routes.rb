@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       constraints: ->(req) { req.format == :json }
 
   get 'datasets/process/:id' => 'datasets#data_proc', as: 'process_dataset'
+  get 'datasets/calc_stats/:id' => 'datasets#calc_stats', as: 'calc_dataset_stats'
   get 'datasets/data/:id/:type' => 'datasets#get_data', as: 'dataset_data',
       constraints: ->(req) { req.format == :json }
 

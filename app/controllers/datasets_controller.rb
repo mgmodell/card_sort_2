@@ -5,10 +5,10 @@ class DatasetsController < ApplicationController
 
   def show
     # Build out any history support.
-    @stats = {}
-    @stats['top words'] = @dataset.words.group(:raw).count
-    @stats['top synonyms'] = @dataset.synonyms.group(:word).count
-    @stats['top stems'] = @dataset.stems.group(:word).count
+    @stats = Hash.new
+    if @dataset.stats_cache.present?
+      @stats = JSON.parse( @dataset.stats_cache )
+    end
 
     # Histogram info
     stem_hist = @dataset.sources.joins(factors: { words: :stem }).group('factors.id').count
@@ -31,6 +31,11 @@ class DatasetsController < ApplicationController
 
   def data_proc
     @dataset.sources.each(&:preproc)
+    redirect_to dataset_path(@dataset)
+  end
+
+  def calc_stats
+    DatasetStatsJob.perform_later( dataset: @dataset )
     redirect_to dataset_path(@dataset)
   end
 
