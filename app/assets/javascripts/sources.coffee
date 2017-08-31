@@ -13,7 +13,7 @@ $(document).ready ->
       height = +svg.attr( 'height' )
       format = d3.format( ',d' )
 
-      color = d3.scaleOrdinal( d3.schemeCategory20c)
+      color = d3.scaleOrdinal(d3.schemeCategory20c)
       pack = d3.pack()
         .size( [width, height ] )
         .padding( 1.5 )
