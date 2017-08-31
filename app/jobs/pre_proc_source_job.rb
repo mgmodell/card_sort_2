@@ -67,6 +67,13 @@ class PreProcSourceJob < ApplicationJob
     to_cache = source.synonyms.group(:word).count
     source.synonym_cache = to_cache.to_json
 
+    stats = {}
+    stats['top words'] = source.words.group(:raw).count.values.extend(DescriptiveStatistics).descriptive_statistics
+    stats['top synonyms'] = source.synonyms.group(:word).count.values.extend(DescriptiveStatistics).descriptive_statistics
+    stats['top stems'] = source.stems.group(:word).count.values.extend(DescriptiveStatistics).descriptive_statistics
+
+    source.stats_cache = stats.to_json
+
     source.processed = true
     source.save
   end

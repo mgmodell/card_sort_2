@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170829120809) do
+ActiveRecord::Schema.define(version: 20170831143140) do
 
   create_table "authors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "given_name"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20170829120809) do
     t.text "word_cache"
     t.text "stem_cache"
     t.text "synonym_cache"
+    t.text "stats_cache"
     t.index ["dataset_id"], name: "index_sources_on_dataset_id"
     t.index ["topic_id"], name: "index_sources_on_topic_id"
   end

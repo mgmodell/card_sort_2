@@ -13,30 +13,22 @@
   <li><%= author.given_name %> <%= author.family_name %></li>
 <% end %></ul>
 </br>
+<% @stats.each do |key,counts|
+  stat_pack = counts.values.extend(DescriptiveStatistics)
+end %>
 <table>
     <tr>
       <th>Type</th>
-      <th>Entry Count</th>
-      <th>Min</th>
-      <th>Max</th>
-      <th>Mean</th>
-      <th>Median</th>
-      <th>Standard Deviation</th>
-      <th>Range</th>
-      <th>Mode</th>
+      <% @stats.values[0].keys.each do |key| %>
+      <th><%= key %></th>
+      <% end %>
     </tr>
-    <% @stats.each do |key,counts|
-      stat_pack = counts.values.extend(DescriptiveStatistics)%>
+    <% @stats.each do |key,stats| %>
     <tr>
       <th><%= key %></th>
-      <th><%= stat_pack.count %></th>
-      <th><%= stat_pack.min %></th>
-      <th><%= stat_pack.max %></th>
-      <th><%= stat_pack.mean %></th>
-      <th><%= stat_pack.median %></th>
-      <th><%= stat_pack.standard_deviation %></th>
-      <th><%= stat_pack.range %></th>
-      <th><%= stat_pack.mode %></th>
+      <% stats.keys.each do |stat_key| %>
+      <th><%= stats[ stat_key ] %></th>
+      <% end %>
     </tr>
     <% end %>
 </table>
@@ -65,14 +57,17 @@
 </select><br>
 <select id="slice_opt">
   <option>All</option>
-  <% unless @dataset.stats_cache.blank? %>
-  <option>Q1</option>
-  <option>Q2</option>
-  <option>Q3</option>
-  <option>Q4</option>
-  <option>1SD</option>
-  <option>2SD</option>
-  <% end %>
+  <option>bottom</option>
+  <option>lower half</option>
+  <option>upper half</option>
+  <option>within 1sd</option>
+  <option>within 2sd</option>
+  <option>lower 1sd</option>
+  <option>upper 1sd</option>
+  <option>lower 2sd</option>
+  <option>between 1sd and 2sd up</option>
+  <option>upper 2sd</option>
+  <option>top</option>
 </select><br>
 <svg id="word_counts" width="500" height="500" font-family="sans-serif"
   font-size="10" text-anchor="middle">
