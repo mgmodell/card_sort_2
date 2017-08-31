@@ -8,8 +8,6 @@ class DatasetsController < ApplicationController
     @stats = {}
     @stats = JSON.parse(@dataset.stats_cache) if @dataset.stats_cache.present?
 
-    # Histogram info
-    stem_hist = @dataset.sources.joins(factors: { words: :stem }).group('factors.id').count
   end
 
   def edit; end
@@ -42,14 +40,56 @@ class DatasetsController < ApplicationController
     case params[:type].downcase
     when 'stems'
       counts = @dataset.get_stem_counts
+      stat_key = 'top stems'
     when 'words'
       counts = @dataset.get_word_counts
+      stat_key = 'top words'
     when 'synonyms'
       counts = @dataset.get_synonym_counts
+      stat_key = 'top synonyms'
     end
 
-    puts 'here!'
-    puts counts
+    unless @dataset.stats_cache.blank?
+      stats = JSON.parse(@dataset.stats_cache) if @dataset.stats_cache.present?
+      max = nil
+      min = nil
+      sd = stats[ stat_key ][ 'standard_deviation' ]
+      case params[:slice].downcase
+      when 'all'
+      when 'bottom'
+        max = stats[ stat_key ][ 'mean' ] - 2 * sd
+      when 'lower half'
+        max = stats[ stat_key ][ 'mean' ]
+      when 'upper half'
+        min = stats[ stat_key ][ 'mean' ]
+      when 'within 1sd'
+        max = stats[ stat_key ][ 'mean' ] + sd
+        min = stats[ stat_key ][ 'mean' ] - sd
+      when 'within 2sd'
+        max = stats[ stat_key ][ 'mean' ] + 2 * sd
+        min = stats[ stat_key ][ 'mean' ] - 2 * sd
+      when 'lower 1sd'
+        max = stats[ stat_key ][ 'mean' ] 
+        min = stats[ stat_key ][ 'mean' ] - sd
+      when 'upper 1sd'
+        min = stats[ stat_key ][ 'mean' ] 
+        max = stats[ stat_key ][ 'mean' ] + sd
+      when 'lower 2sd'
+        max = stats[ stat_key ][ 'mean' ] 
+        min = stats[ stat_key ][ 'mean' ] - 2*sd
+      when 'upper 2sd'
+        min = stats[ stat_key ][ 'mean' ] 
+        max = stats[ stat_key ][ 'mean' ] + 2*sd
+      when 'between 1sd and 2sd up'
+        min = stats[ stat_key ][ 'mean' ] + sd
+        max = stats[ stat_key ][ 'mean' ] + 2*sd
+      when 'top'
+        min = stats[ stat_key ][ 'mean' ] - 2 * sd
+      end
+
+      counts = counts.delete_if{|key,value| (min.present? && value < min) || (max.present? && value > max ) }
+      
+    end
 
     respond_to do |format|
       format.json { render json: counts.to_a }

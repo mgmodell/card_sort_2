@@ -31,6 +31,22 @@
   <option>Stems</option>
   <option>Synonyms</option>
 </select><br>
+<select id="slice_opt">
+  <option>All</option>
+  <% unless @dataset.stats_cache.blank? %>
+  <option>bottom</option>
+  <option>lower half</option>
+  <option>upper half</option>
+  <option>within 1sd</option>
+  <option>within 2sd</option>
+  <option>lower 1sd</option>
+  <option>upper 1sd</option>
+  <option>lower 2sd</option>
+  <option>between 1sd and 2sd up</option>
+  <option>upper 2sd</option>
+  <option>top</option>
+  <% end %>
+</select><br>
 
 <svg id="word_counts" width="500" height="500" font-family="sans-serif"
   font-size="10" text-anchor="middle">

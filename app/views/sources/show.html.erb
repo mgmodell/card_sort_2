@@ -63,6 +63,17 @@
   <option>Stems</option>
   <option>Synonyms</option>
 </select><br>
+<select id="slice_opt">
+  <option>All</option>
+  <% unless @dataset.stats_cache.blank? %>
+  <option>Q1</option>
+  <option>Q2</option>
+  <option>Q3</option>
+  <option>Q4</option>
+  <option>1SD</option>
+  <option>2SD</option>
+  <% end %>
+</select><br>
 <svg id="word_counts" width="500" height="500" font-family="sans-serif"
   font-size="10" text-anchor="middle">
 </svg>

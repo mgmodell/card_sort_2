@@ -4,8 +4,10 @@
 
 #Building a D3 Bubble Chart
 $(document).ready ->
-  $('#word_count_opt' ).change ->
-    url = '/' + $('#granularity').val() + '/data/' + $('#source_id').val() + '/' + $(this).val() + '.json'
+  $('#word_count_opt, #slice_opt' ).change ->
+    url = '/' + $('#granularity').val() + '/data/' 
+    url = url + $('#source_id').val() + '/' + $('#word_count_opt').val() 
+    url = url + '/' + $('#slice_opt').val() + '.json'
     d3.json url, (d) ->
       svg = d3.selectAll( '#word_counts > *' ).remove()
       svg = d3.select( '#word_counts' )
