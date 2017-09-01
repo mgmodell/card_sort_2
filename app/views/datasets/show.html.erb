@@ -4,24 +4,28 @@
   So far, <%= @dataset.sources.count %>
   sources (below) contribute to this data.
 </p>
-<table>
-    <tr>
-      <th>Type</th>
-      <% @stats.values[0].keys.each do |key| %>
-      <th><%= key %></th>
+<% unless @stats.values.empty? %>
+  <table>
+      <tr>
+        <th>Type</th>
+        <% @stats.values[0].keys.each do |key| %>
+        <th><%= key %></th>
+        <% end %>
+      </tr>
+      <% @stats.each do |key,stats| %>
+      <tr>
+        <th><%= key %></th>
+        <% stats.keys.each do |stat_key| %>
+        <th><%= stats[ stat_key ] %></th>
+        <% end %>
+      </tr>
       <% end %>
-    </tr>
-    <% @stats.each do |key,stats| %>
-    <tr>
-      <th><%= key %></th>
-      <% stats.keys.each do |stat_key| %>
-      <th><%= stats[ stat_key ] %></th>
-      <% end %>
-    </tr>
-    <% end %>
-</table>
+  </table>
+  <%= link_to 'Re-Calculate Stats', calc_dataset_stats_path( @dataset ) %></br>
+<% else %>
+  No stats calculated yet: <%= link_to 'Calculate them now?', calc_dataset_stats_path( @dataset ) %></br>
+<% end %>
 <br><br>
-<%= link_to 'Re-Calculate Stats', calc_dataset_stats_path( @dataset ) %></br>
 <br>
 <%= @dataset.percent_processed %>% Sources Processed&nbsp;
     <%= link_to '[re-process dataset sources]', process_dataset_path( @dataset ) %></br>
