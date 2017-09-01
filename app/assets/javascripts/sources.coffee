@@ -15,7 +15,7 @@ $(document).ready ->
       height = +svg.attr( 'height' )
       format = d3.format( ',d' )
 
-      color = d3.scaleOrdinal(d3.schemeCategory20c)
+      color = d3.scaleOrdinal(d3.schemeCategory20)
       pack = d3.pack()
         .size( [width, height ] )
         .padding( 1.5 )
@@ -46,7 +46,7 @@ $(document).ready ->
           d.r
         )
         .style( 'fill', (d) ->
-          color( d.package )
+          color( d.value )
         )
 
       node.append( 'clipPath' )
