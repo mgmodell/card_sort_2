@@ -34,7 +34,7 @@ class PreProcSourceJob < ApplicationJob
 
     # Take care of item data
     source.factors.each do |factor|
-      filtered = Source.filter.filter(factor.text.split(/\W+/))
+      filtered = Source.filter.filter(factor.text.downcase.split(/\W+/))
       filtered.each do |word|
         result = Spellchecker.check(word, dictionary = 'en')[0]
         word_obj = Word.where(raw: result[:original]).take
