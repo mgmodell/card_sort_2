@@ -14,19 +14,21 @@ class PreProcSourceJob < ApplicationJob
         source.authors = []
         author_names = source.author_list.split(' and ')
         author_names.each do |name|
-          name_components = name.split(', ')
-          g_name =  name_components[1].capitalize
-          f_name = name_components[0].split(/\W+/).map(&:capitalize) * ' '
+          unless name.blank?
+            name_components = name.split(', ')
+            g_name =  name_components[1].capitalize
+            f_name = name_components[0].split(/\W+/).map(&:capitalize) * ' '
 
-          a = Author.where(given_name: g_name,
-                           family_name: f_name).take
-          if a.nil?
-            a = Author.create(
-              given_name: g_name,
-              family_name: f_name
-            )
+            a = Author.where(given_name: g_name,
+                             family_name: f_name).take
+            if a.nil?
+              a = Author.create(
+                given_name: g_name,
+                family_name: f_name
+              )
+            end
+            source.authors << a
           end
-          source.authors << a
         end
       end
       source.save
