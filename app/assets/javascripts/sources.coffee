@@ -9,6 +9,9 @@ $(document).ready ->
     url = url + $('#source_id').val() + '/' + $('#word_count_opt').val() 
     url = url + '/' + $('#slice_opt').val() + '.json'
     d3.json url, (d) ->
+      $( '#words_found' ).text( d.length + words )
+      $( '#words' ).find( 'option' ).remove( )
+      $( '#words' ).append( '<option>' + item[ 0 ] + '</option>' ) for item in d
       svg = d3.selectAll( '#word_counts > *' ).remove()
       svg = d3.select( '#word_counts' )
       width = +svg.attr( 'width' )

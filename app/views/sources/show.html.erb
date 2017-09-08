@@ -16,6 +16,7 @@
 <% @stats.each do |key,counts|
   stat_pack = counts.values.extend(DescriptiveStatistics)
 end %>
+<% unless @stats.values.empty? %>
 <table>
     <tr>
       <th>Type</th>
@@ -32,6 +33,7 @@ end %>
     </tr>
     <% end %>
 </table>
+<% end %>
 
 <i><strong>Citation:</strong> <%= @source.citation %></i>
 
@@ -69,6 +71,8 @@ end %>
   <option>upper 2sd</option>
   <option>top</option>
 </select><br>
+<select name="words" id="words" size="30">
+</select>
 <svg id="word_counts" width="500" height="500" font-family="sans-serif"
   font-size="10" text-anchor="middle">
 </svg>

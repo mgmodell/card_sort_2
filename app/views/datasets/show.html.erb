@@ -31,6 +31,7 @@
     <%= link_to '[re-process dataset sources]', process_dataset_path( @dataset ) %></br>
 <br>
 
+<hr>
 <input type="hidden" id="granularity" value="datasets">
 <input type="hidden" id="source_id" value="<%=@dataset.id %>">
 <select id="word_count_opt">
@@ -54,10 +55,14 @@
   <option>top</option>
   <% end %>
 </select><br>
+<br><div id="words_found"></div><br>
 
+<select name="words" id="words" size="30">
+</select>
 <svg id="word_counts" width="500" height="500" font-family="sans-serif"
   font-size="10" text-anchor="middle">
 </svg>
+<hr>
 <ul><% @dataset.sources.each do |source| %>
   <li>
      <%= link_to source.citation, source_path( source ) %> 
