@@ -43,6 +43,7 @@ class SourcesController < ApplicationController
       stat_key = 'top synonyms'
     end
 
+
     unless @source.stats_cache.blank?
       stats = JSON.parse(@source.stats_cache) if @source.stats_cache.present?
       max = nil

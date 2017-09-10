@@ -44,14 +44,25 @@ class Source < ApplicationRecord
   end
 
   def get_word_counts
-    word_cache.blank? ? words.group(:raw).count : JSON.parse(word_cache)
+    require 'zlib'
+    word_counts = nil
+    if word_cache.blank?
+      word_counts = words.group( :raw ).count
+    else
+      word_counts = Zlib::Inflate.inflate( Base64.decode64(word_cache) )
+      word_counts = JSON.parse( word_counts )
+    end
+    word_counts
   end
 
   def get_stem_counts
-    stem_cache.blank? ? stems.group(:word).count : JSON.parse(stem_cache)
+    require 'zlib'
+    stem_cache.blank? ? stems.group(:word).count : 
+        JSON.parse( Zlib::Inflate.inflate( Base64.decode64(stem_cache) ) )
   end
 
   def get_synonym_counts
-    synonym_cache.blank? ? synonyms.group(:word).count : JSON.parse(synonym_cache)
+    synonym_cache.blank? ? synonyms.group(:word).count :
+        JSON.parse( Zlib::Inflate.inflate( Base64.decode64(synonym_cache) ) )
   end
 end

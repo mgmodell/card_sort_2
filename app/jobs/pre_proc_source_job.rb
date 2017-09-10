@@ -14,7 +14,7 @@ class PreProcSourceJob < ApplicationJob
         source.authors = []
         author_names = source.author_list.split(' and ')
         author_names.each do |name|
-          unless name.blank?
+          unless name.blank? || name = ', '
             name_components = name.split(', ')
             g_name =  name_components[1].capitalize
             f_name = name_components[0].split(/\W+/).map(&:capitalize) * ' '
@@ -62,12 +62,16 @@ class PreProcSourceJob < ApplicationJob
       factor.save
     end
     # Process the terms
-    to_cache = source.words.group(:raw).count
-    source.word_cache = to_cache.to_json
-    to_cache = source.stems.group(:word).count
-    source.stem_cache = to_cache.to_json
-    to_cache = source.synonyms.group(:word).count
-    source.synonym_cache = to_cache.to_json
+    require 'zlib'
+    to_cache = source.words.group(:raw).count.to_json
+    source.word_cache = Base64.encode64( Zlib::Deflate.deflate( to_cache ) )
+    puts "Words:    Original: #{to_cache.size} -> Deflated: #{source.word_cache.size}"
+    to_cache = source.stems.group(:word).count.to_json
+    source.stem_cache = Base64.encode64( Zlib::Deflate.deflate( to_cache ) )
+    puts "Stems:    Original: #{to_cache.size} -> Deflated: #{source.stem_cache.size}"
+    to_cache = source.synonyms.group(:word).count.to_json
+    source.synonym_cache = Base64.encode64( Zlib::Deflate.deflate( to_cache ) )
+    puts "Synonyms: Original: #{to_cache.size} -> Deflated: #{source.synonym_cache.size}"
 
     stats = {}
     stats['top words'] = source.words.group(:raw).count.values.extend(DescriptiveStatistics).descriptive_statistics
