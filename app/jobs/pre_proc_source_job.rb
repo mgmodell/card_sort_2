@@ -39,24 +39,26 @@ class PreProcSourceJob < ApplicationJob
       filtered = Source.filter.filter(factor.text.downcase.split(/\W+/))
       filtered.each do |word|
         result = Spellchecker.check(word, dictionary = 'en')[0]
-        word_obj = Word.where(raw: result[:original]).take
+        unless word.empty?
+          word_obj = Word.where(raw: result[:original]).take
 
-        if word_obj.nil?
-          if result[:correct]
-            stemmed = result[:original].stem
-            stem = Stem.where(word: stemmed).take
-            stem = Stem.create(word: stemmed) if stem.nil?
-            word_obj = Word.create(raw: result[:original], stem: stem)
-          else
-            if factor.unverified.blank?
-              factor.unverified = result[:original]
+          if word_obj.nil?
+            if result[:correct]
+              stemmed = result[:original].stem
+              stem = Stem.where(word: stemmed).take
+              stem = Stem.create(word: stemmed) if stem.nil?
+              word_obj = Word.create(raw: result[:original], stem: stem)
             else
-              factor.unverified += ' ' + result[:original]
+              if factor.unverified.blank?
+                factor.unverified = result[:original]
+              else
+                factor.unverified += ' ' + result[:original]
+              end
             end
           end
-        end
-        if word_obj.present? && factor.words.where(id: word_obj).empty?
-          factor.words << word_obj
+          if word_obj.present? && factor.words.where(id: word_obj).empty?
+            factor.words << word_obj
+          end
         end
       end
       factor.save
