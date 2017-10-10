@@ -6,13 +6,17 @@ Rails.application.routes.draw do
 
   post 'sources/add_refs/:id' => 'sources#add_refs', as: 'add_refs_to_source'
   get 'sources/process/:id' => 'sources#data_proc', as: 'process_source'
-  get 'sources/data/:id/:type/:slice' => 'sources#get_data', as: 'source_data',
+  get 'sources/word_data/:id/:type/:slice' => 'sources#get_data', as: 'source_data',
       constraints: ->(req) { req.format == :json }
+  get 'sources/relate_data/:id/:type' => 'sources#get_relate_data',
+      as: 'source_relate_data', constraints: ->(req) { req.format == :json }
 
   get 'datasets/process/:id' => 'datasets#data_proc', as: 'process_dataset'
   get 'datasets/calc_stats/:id' => 'datasets#calc_stats', as: 'calc_dataset_stats'
-  get 'datasets/data/:id/:type/:slice' => 'datasets#get_data', as: 'dataset_data',
+  get 'datasets/word_data/:id/:type/:slice' => 'datasets#get_data', as: 'dataset_data',
       constraints: ->(req) { req.format == :json }
+  get 'datasets/relate_data/:id/:type' => 'datasets#get_relate_data',
+      as: 'dataset_relate_data', constraints: ->(req) { req.format == :json }
 
   get 'home/pull/:key' => 'home#pull', as: 'new_dataset'
   get 'home/update_synonyms' => 'home#update_synonyms', as: 'update_synonyms'

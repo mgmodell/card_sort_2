@@ -29,6 +29,42 @@ class SourcesController < ApplicationController
     redirect_to source_path(@source)
   end
 
+  def get_relate_data
+    case params[:type].downcase
+    links = []
+    nodes = []
+    when 'authors'
+      links = get_source_refs @source
+      links.each do |link|
+        nodes += { id: link[:source].id,
+                    name: link[:source].citation
+                 }
+        link[:source] = link[:source].id
+        link[:target] = link[:target].id
+      end
+
+    when 'sources'
+    end
+    data = { nodes: nodes, links: links }
+    respond_to do |format|
+      format.json { render json: data }
+    end
+  end
+
+  def get_source_refs( source: )
+    links = [ ]
+    source.refs.each do |ref|
+      links << { source: source,
+                 target: ref,
+                 value: 8
+               }
+      if ref.refs.count > 0
+        links += get_source_refs( ref )
+      else
+    end
+    links
+  end
+
   def get_data
     counts = {}
     case params[:type].downcase

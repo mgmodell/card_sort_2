@@ -14,4 +14,5 @@
 //= require jquery2
 //= require jquery_ujs
 //= require d3
-//= require sources
+//= require word_proc
+//= require relationships

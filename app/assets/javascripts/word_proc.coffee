@@ -5,7 +5,7 @@
 #Building a D3 Bubble Chart
 $(document).ready ->
   $('#word_count_opt, #slice_opt' ).change ->
-    url = '/' + $('#granularity').val() + '/data/' 
+    url = '/' + $('#granularity').val() + '/word_data/' 
     url = url + $('#source_id').val() + '/' + $('#word_count_opt').val() 
     url = url + '/' + $('#slice_opt').val() + '.json'
     d3.json url, (d) ->

@@ -100,6 +100,14 @@ end %>
 <ul><% @source.refs.each do |ref| %>
   <li><%= ref.citation %></li>
 <% end %></ul>
+<select id="relate_opts">
+  <option>Authors</option>
+  <option>Sources</option>
+</select><br>
+<svg id="relationships" width="500" height="500" 
+  font-family="sans-serif" font-size="10" text-anchor="middle">
+</svg>
+
 
 <h1>Add Sources</h1>
 <%= form_tag add_refs_to_source_path( @source ) do %>
