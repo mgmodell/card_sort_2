@@ -30,11 +30,11 @@ class SourcesController < ApplicationController
   end
 
   def get_relate_data
-    case params[:type].downcase
     links = []
     nodes = []
+    case params[:type].downcase
     when 'authors'
-      links = get_source_refs @source
+      links = get_source_refs source: @source
       links.each do |link|
         nodes += { id: link[:source].id,
                     name: link[:source].citation
@@ -60,7 +60,7 @@ class SourcesController < ApplicationController
                }
       if ref.refs.count > 0
         links += get_source_refs( ref )
-      else
+      end
     end
     links
   end

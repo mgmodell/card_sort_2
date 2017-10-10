@@ -23,21 +23,22 @@ $(document).ready ->
         .attr("class", "links")
         .selectAll( "line" )
         .data( graph.links )
-        .enter.append( "line" )
-          .attr("stroke-width", (d)-> 
-            return Math.sqrt(d.value);
-          )
+        .enter().append( "line" )
+        .attr("stroke-width", (d)-> 
+          return Math.sqrt(d.value);
+        )
 
       node = svg.append( "g" )
         .attr("class", "nodes")
         .selectAll( "circle" )
         .data( graph.nodes )
-        .enter.append( "circle" )
-          .attr( "r", 5 )
-          .call( d3.drag()
-            .on( "start", dragstarted )
-            .on( "drag", dragged )
-            .on( "end", dragended )
+        .enter().append( "circle" )
+        .attr( "r", 5 )
+        .call( d3.drag()
+        .on( "start", dragstarted )
+        .on( "drag", dragged )
+        .on( "end", dragended )
+        )
 
       node.append( "title" )
         .text( $( '#relate_opt' ) )
@@ -64,23 +65,25 @@ $(document).ready ->
             return d.target.y
           )
         node
-          attr("cx", (d) ->
+          .attr("cx", (d) ->
             return d.x
           )
-          attr("cy", (d) ->
+          .attr("cy", (d) ->
             return d.y
           )
 
-dragstarted = (d)->
-  if (!d3.event.active) simulation.alphaTarget(0.3).restart()
+dragstarted =(d)->
+  if (!d3.event.active)
+    simulation.alphaTarget(0.3).restart()
   d.fx = d.x
   d.fy = d.y
 
-dragged = (d) ->
+dragged =(d) ->
   d.fx = d3.event.x
   d.fy = d3.event.y
 
-dragended = (d)->
-  if (!d3.event.active) simulation.alphaTarget(0)
+dragended =(d)->
+  if (!d3.event.active)
+    simulation.alphaTarget(0)
   d.fx = null
   d.fy = null
