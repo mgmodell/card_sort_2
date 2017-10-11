@@ -36,8 +36,8 @@ class SourcesController < ApplicationController
     when 'authors'
       links = get_source_refs source: @source
       links.each do |link|
-        nodes += { id: link[:source].id,
-                    name: link[:source].citation
+        nodes << { id: link[:target].id,
+                    name: link[:target].citation
                  }
         link[:source] = link[:source].id
         link[:target] = link[:target].id

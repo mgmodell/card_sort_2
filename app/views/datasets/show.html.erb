@@ -70,6 +70,7 @@
         <li><%= source.processed ? 'Processed' : 'Unprocessed' %></li>
         <li><%= link_to '[process]', process_source_path( source ) %></li>
         <li>References: <%= source.refs_processed ? 'Fully Processed' : 'Incomplete' %></li>
+        <li>Sources attached: <%= source.refs.count %></li>
         <li><%= source.unverifieds.blank? ? 'OK' : raw( '<strong>spelling problems</strong>') %></li>
       </ul>
   </li>
