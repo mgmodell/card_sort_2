@@ -56,7 +56,7 @@ class SourcesController < ApplicationController
     source.refs.each do |ref|
       links << { source: source,
                  target: ref,
-                 value: 8
+                 value: ref.year
                }
       if ref.refs.count > 0
         links += get_source_refs( ref )
