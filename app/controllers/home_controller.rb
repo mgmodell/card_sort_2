@@ -6,7 +6,6 @@ class HomeController < ApplicationController
 
     current_user.refresh_token_if_expired
     session = GoogleDrive::Session.from_access_token(current_user.token)
-    query = 'trashed != true'
 
     @sheets = session.spreadsheets(q: 'trashed != true',
                                    corpus: 'user',

@@ -30,9 +30,9 @@ class User < ApplicationRecord
   def refresh_token_if_expired
     if token_expired?
 
-      key = Rails.application.config.google_key
-      secret = Rails.application.config.google_secret
-      domain = Rails.application.config.google_domain
+      key = Devise.omniauth_configs[:google_oauth2].args[ 0 ]
+      secret = Devise.omniauth_configs[:google_oauth2].args[ 1 ]
+      domain = 'https://accounts.google.com/o/'
 
       options = {
         body: {
