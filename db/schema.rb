@@ -10,22 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170831143140) do
+ActiveRecord::Schema.define(version: 2018_05_05_084756) do
 
-  create_table "authors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "authors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "given_name"
     t.string "family_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "authors_sources", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "authors_sources", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "author_id", null: false
     t.bigint "source_id", null: false
     t.index ["source_id", "author_id"], name: "index_authors_sources_on_source_id_and_author_id", unique: true
   end
 
-  create_table "datasets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "datasets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20170831143140) do
     t.index ["user_id"], name: "index_datasets_on_user_id"
   end
 
-  create_table "factors", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "factors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "source_id"
     t.text "text"
     t.datetime "created_at", null: false
@@ -44,20 +44,20 @@ ActiveRecord::Schema.define(version: 20170831143140) do
     t.index ["source_id"], name: "index_factors_on_source_id"
   end
 
-  create_table "factors_words", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "factors_words", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "word_id", null: false
     t.bigint "factor_id", null: false
     t.index ["factor_id", "word_id"], name: "index_factors_words_on_factor_id_and_word_id", unique: true
   end
 
-  create_table "references", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "references", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "source_id"
     t.integer "reference_source_id"
     t.index ["reference_source_id", "source_id"], name: "index_references_on_reference_source_id_and_source_id", unique: true
     t.index ["source_id", "reference_source_id"], name: "index_references_on_source_id_and_reference_source_id", unique: true
   end
 
-  create_table "sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "sources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "citation"
     t.string "author_list"
     t.integer "year"
@@ -74,36 +74,37 @@ ActiveRecord::Schema.define(version: 20170831143140) do
     t.text "stem_cache"
     t.text "synonym_cache"
     t.text "stats_cache"
+    t.boolean "discarded"
     t.index ["dataset_id"], name: "index_sources_on_dataset_id"
     t.index ["topic_id"], name: "index_sources_on_topic_id"
   end
 
-  create_table "stems", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "stems", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "word"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "synonyms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "synonyms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "word"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "synonyms_words", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "synonyms_words", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "word_id", null: false
     t.bigint "synonym_id", null: false
     t.index ["synonym_id", "word_id"], name: "index_synonyms_words_on_synonym_id_and_word_id", unique: true
   end
 
-  create_table "topics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -123,7 +124,7 @@ ActiveRecord::Schema.define(version: 20170831143140) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "words", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "words", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "raw"
     t.bigint "stem_id"
     t.datetime "created_at", null: false

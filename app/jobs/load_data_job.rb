@@ -30,6 +30,7 @@ class LoadDataJob < ApplicationJob
       s.year = ws[row_num, 2]
       s.author_list = ws[row_num, 3]
       s.purpose = ws[row_num, 4]
+      s.discarded = ws[row_num, 7] == 'Yes'
       s.discard_reason = ws[row_num, 8]
       t = Topic.where(name: ws[row_num, 6]).count > 0 ?
                   Topic.where(name: ws[row_num, 6]).take :

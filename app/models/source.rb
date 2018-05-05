@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Source < ApplicationRecord
-  default_scope { order(:citation) }
+  default_scope { where( discarded: false ).order(:citation) }
   belongs_to :dataset, inverse_of: :sources, optional: true
   has_and_belongs_to_many :authors, inverse_of: :sources
   belongs_to :topic, inverse_of: :sources
