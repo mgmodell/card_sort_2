@@ -11,7 +11,7 @@ $(document).ready ->
     d3.json url, (d) ->
       $( '#words_found' ).text( d.length + ' items found' )
       $( '#words' ).find( 'option' ).remove( )
-      $( '#words' ).append( '<option>' + item[ 0 ] + '</option>' ) for item in d
+      $( '#words' ).append( '<option>' + item[ 0 ] + ' (' + item[ 1 ] + ')</option>' ) for item in d
       svg = d3.selectAll( '#word_counts > *' ).remove()
       svg = d3.select( '#word_counts' )
       width = +svg.attr( 'width' )
