@@ -79,11 +79,16 @@ class DatasetsController < ApplicationController
       when 'upper 2sd'
         min = stats[stat_key]['mean']
         max = stats[stat_key]['mean'] + 2 * sd
+      when 'between 1sd and 3sd up'
+        min = stats[stat_key]['mean'] + sd
+        max = stats[stat_key]['mean'] + 3 * sd
       when 'between 1sd and 2sd up'
         min = stats[stat_key]['mean'] + sd
         max = stats[stat_key]['mean'] + 2 * sd
       when 'top'
         min = stats[stat_key]['mean'] + 2 * sd
+      when '1sd above'
+        min = stats[stat_key]['mean'] + sd
       end
 
       counts = counts.delete_if { |_key, value| (min.present? && value < min) || (max.present? && value > max) }
