@@ -24,8 +24,9 @@ class LoadDataJob < ApplicationJob
     puts ds.errors.full_messages unless ds.errors.empty?
 
     puts '***** Topics *******'
+    output_str = ''
     (2..ws.num_rows).each do |row_num|
-      s = Source.new
+      s = ds.sources.build
       s.citation = ws[row_num, 1]
       s.year = ws[row_num, 2]
       s.author_list = ws[row_num, 3]
@@ -36,21 +37,24 @@ class LoadDataJob < ApplicationJob
                   Topic.where(name: ws[row_num, 6]).take :
                   Topic.where(name: 'Undetermined').take
       s.topic = t
-      s.dataset = ds
       s.save
 
       # update progress
       progress += 1
       ds.load_pct = 100 * (progress / item_count)
+      s.delete if s.citation.blank?
       ds.save
+      output_str +=  "*****\n=trow (#{row_num}): #{ws[row_num, 7]} (#{ws[row_num, 7] == 'Yes'})"
 
       puts s.errors.full_messages unless s.errors.empty?
     end
 
+    puts "\n\n"
+    puts output_str
+
     not_hit = []
+    puts '******** SOURCES *************'
     ds.sources.each do |source|
-      puts '******** SOURCES *************'
-      # puts "#{source.author_list} (#{source.year}"
       ws = ss.worksheet_by_title source.author_list
       if ws.nil?
         not_hit << source.author_list
