@@ -24,7 +24,6 @@ class LoadDataJob < ApplicationJob
     puts ds.errors.full_messages unless ds.errors.empty?
 
     puts '***** Topics *******'
-    output_str = ''
     (2..ws.num_rows).each do |row_num|
       s = ds.sources.build
       s.citation = ws[row_num, 1]
@@ -44,13 +43,11 @@ class LoadDataJob < ApplicationJob
       ds.load_pct = 100 * (progress / item_count)
       s.delete if s.citation.blank?
       ds.save
-      output_str +=  "*****\n=trow (#{row_num}): #{ws[row_num, 7]} (#{ws[row_num, 7] == 'Yes'})"
 
       puts s.errors.full_messages unless s.errors.empty?
     end
 
     puts "\n\n"
-    puts output_str
 
     not_hit = []
     puts '******** SOURCES *************'
