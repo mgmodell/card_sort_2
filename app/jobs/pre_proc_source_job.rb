@@ -14,7 +14,7 @@ class PreProcSourceJob < ApplicationJob
         source.authors = []
         author_names = source.author_list.split(' and ')
         author_names.each do |name|
-          unless name.blank? || name = ', '
+          unless name.blank? || name == ', '
             name_components = name.split(', ')
             g_name =  name_components[1].capitalize
             f_name = name_components[0].split(/\W+/).map(&:capitalize) * ' '
