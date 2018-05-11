@@ -10,7 +10,8 @@ class PreProcSourceJob < ApplicationJob
       correctly_processed = parsed_source[:title] == source.title
       source.title = parsed_source[:title].capitalize unless correctly_processed
       source.author_list = parsed_source[:author] unless correctly_processed
-      unless source.author_list.blank?
+      unless source.author_list.blank? ||
+             !( source.author_list.include?  ', ' )
         source.authors = []
         author_names = source.author_list.split(' and ')
         author_names.each do |name|

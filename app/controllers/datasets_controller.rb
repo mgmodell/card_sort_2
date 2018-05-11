@@ -96,7 +96,7 @@ class DatasetsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render json: counts.to_a }
+      format.json { render json: counts.sort }
     end
   end
 
