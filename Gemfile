@@ -51,6 +51,7 @@ gem 'soundex'
 gem 'spellchecker'
 gem 'stemmify'
 gem 'stopwords-filter', require: 'stopwords'
+gem 'engtagger'
 gem 'sucker_punch'
 gem 'thesaurus'
 

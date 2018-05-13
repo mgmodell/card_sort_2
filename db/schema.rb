@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_05_084756) do
+ActiveRecord::Schema.define(version: 2018_05_11_164157) do
 
   create_table "authors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "given_name"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(version: 2018_05_05_084756) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "syn_checked", default: false, null: false
+    t.string "tag"
     t.index ["stem_id"], name: "index_words_on_stem_id"
   end
 

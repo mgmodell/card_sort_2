@@ -90,6 +90,7 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    engtagger (0.2.1)
     erubi (1.7.1)
     execjs (2.7.0)
     faraday (0.12.2)
@@ -325,6 +326,7 @@ DEPENDENCIES
   d3-rails
   descriptive_statistics (~> 2.4.0)
   devise
+  engtagger
   google_drive
   httparty
   jbuilder (~> 2.5)

@@ -36,8 +36,15 @@ class PreProcSourceJob < ApplicationJob
     end
 
     # Take care of item data
+    @tgr = EngTagger.new if @tgr.nil?
+    outputstr =''
     source.factors.each do |factor|
-      filtered = Source.filter.filter(factor.text.downcase.split(/\W+/))
+      filtered =
+      Source.filter.filter(factor.text.downcase.split(/[\s,\!\?\.;:]+/))
+      parts_of_speech = {}
+      @tgr.get_readable( factor.text.downcase ).split( ' ' ).each do |combo|
+        parts_of_speech[ combo.split( '/' )[0] ] = combo.split( '/')[1]
+      end
       factor.words = []
       filtered.each do |word|
         unless word.length < 3
@@ -50,7 +57,16 @@ class PreProcSourceJob < ApplicationJob
                 stemmed = result[:original].stem
                 stem = Stem.where(word: stemmed).take
                 stem = Stem.create(word: stemmed) if stem.nil?
-                word_obj = Word.create(raw: result[:original], stem: stem)
+                if  parts_of_speech[ result[:original] ].blank?
+                  outputstr += "\n\t\tFactor '#{factor.text}' (#{factor.id})"
+                  outputstr +=  "\n\t*** no pos"
+                  outputstr +=  "\n\t #{parts_of_speech}\n\t\t#{result[:original]}"
+                  
+                end
+                word_obj = Word.create(
+                                    raw: result[:original],
+                                    tag: parts_of_speech[ result[:original] ],
+                                    stem: stem)
               else
                 if factor.unverified.blank?
                   factor.unverified = result[:original]
@@ -67,6 +83,7 @@ class PreProcSourceJob < ApplicationJob
       end
       factor.save
     end
+    logger.debug outputstr
     # Process the terms
     require 'zlib'
     to_cache = source.words.group(:raw).count.to_json

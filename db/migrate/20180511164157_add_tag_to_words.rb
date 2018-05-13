@@ -1,0 +1,5 @@
+class AddTagToWords < ActiveRecord::Migration[5.2]
+  def change
+    add_column :words, :tag, :string
+  end
+end
