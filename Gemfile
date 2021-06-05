@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.7.2'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -9,7 +9,7 @@ git_source(:github) do |repo_name|
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0.0'
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server
@@ -46,6 +46,7 @@ gem 'httparty'
 gem 'jquery-rails'
 gem 'listen', '>= 3.0.5', '< 3.2'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 gem 'simple_form'
 gem 'soundex'
 gem 'spellchecker'
