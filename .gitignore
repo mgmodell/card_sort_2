@@ -15,11 +15,13 @@
 rerun.txt
 *.swp
 *~
+..bfg-report
 
 /node_modules
 /yarn-error.log
 
 .byebug_history
+**/*.DS_Store
 /public/packs
 /public/packs-test
 /node_modules

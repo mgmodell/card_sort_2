@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.7.2'
+ruby '3.1.3'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -44,7 +44,7 @@ gem 'devise'
 gem 'google_drive'
 gem 'httparty'
 gem 'jquery-rails'
-gem 'listen', '>= 3.0.5', '< 3.2'
+gem 'listen'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'simple_form'
